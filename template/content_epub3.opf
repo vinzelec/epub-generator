@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://www.idpf.org/2007/opf" unique-identifier="pub-id" version="3.0">
+    <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+        <dc:identifier id="pub-id">urn:uuid:epb.uid</dc:identifier>
+        <meta refines="#pub-id" property="identifier-type" scheme="xsd:string">uuid</meta>
+        <dc:identifier id="isbn-id">urn:isbn:epb.isbn</dc:identifier>
+        <meta refines="#isbn-id" property="identifier-type" scheme="onix:codelist5">15</meta>
+        <meta property="dcterms:created">${date}</meta>
+        <meta property="dcterms:modified">${date}</meta>
+        <dc:creator id="author">epb.author</dc:creator>
+        <meta refines="#author" property="role" scheme="marc:relators">aut</meta>
+		${contributors}
+        <dc:language>epb.lang</dc:language>
+        <dc:publisher>epb.publisher</dc:publisher>
+        <dc:subject>epb.tags</dc:subject>
+        <dc:title>epb.title</dc:title>
+    </metadata>
+    <manifest>
+        <item id="toc" properties="nav" href="toc.xhtml" media-type="application/xhtml+xml" />
+        ${manifest}
+    </manifest>
+    <spine>
+    	${spine}
+    </spine>
+</package>

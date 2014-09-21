@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     17 sept. 2012 19:10:40                                                        
+
+     ebooks    
+     generate an ebook skeleton, clean the content, pack and check the result...
+                   
+     Vinze                                                                
+     ====================================================================== -->
+<project name="ebooks" default="all">
+	<description>
+            generate an ebook
+    </description>
+
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+		<classpath path="lib/ant-contrib-0.6.jar" />
+	</taskdef>
+	<taskdef name="epub" classname="epb.Epub" classpath="bin" />
+	<taskdef name="epubcheck" classname="epb.Check">
+		<classpath>
+			<pathelement path="bin" />
+			<fileset dir="lib">
+				<include name="**/*.jar" />
+			</fileset>
+		</classpath>
+	</taskdef>
+	<scriptdef name="generateguid" language="javascript">
+		<attribute name="property" />
+		<![CDATA[
+	    project.setProperty( attributes.get( "property" ), java.util.UUID.randomUUID() );
+	    ]]>
+	</scriptdef>
+
+	<!-- load metadata file -->
+	<property file="${base}/metadata.properties" />
+	<!-- default value, can be overwritten in script parameters -->
+	<property name="target" value="3" />
+	<property name="useSystemZip" value="false" />
+	<!-- default values that can be overwritten in metadata.properties -->
+	<generateguid property="epb.uid" />
+	<property name="epb.isbn" value="000-0-00000-000-0" />
+	<property name="epb.author" value="Unknown Author" />
+	<basename property="epb.filename" file="${base}"/>
+	<property name="epb.publisher" value="Unknown Publisher" />
+	<property name="epb.title" value="Untitled" />
+	<property name="epb.lang" value="en" />
+	<property name="epb.tags" value="" />
+	<property name="epb.coverFile" value="" />
+	<!-- shit cannot have default value on this :p -->
+
+	<property name="outfile" value="out/${epb.filename}-epub${target}.epub" />
+
+	<fileset dir="${base}/OEBPS/text" id="inXhtmlFiles">
+		<include name="*.xhtml" />
+	</fileset>
+
+	<fileset dir="out/${epb.filename}/OEBPS/text" id="xhtmlFiles">
+		<include name="*.xhtml" />
+	</fileset>
+
+	<fileset dir="out/${epb.filename}/OEBPS/images" id="imagesFiles">
+		<include name="*.jpg" />
+		<include name="*.jpeg" />
+		<include name="*.png" />
+	</fileset>
+
+	<fileset dir="out/${epb.filename}/OEBPS/styles" id="stylesFiles">
+		<include name="*.css" />
+	</fileset>
+
+	<!-- ================================= 
+          target: all              
+         ================================= -->
+	<target name="all" depends="init, skeleton, cleanFiles, pack, check" description="Pass all the targets">
+	</target>
+
+
+	<!-- ================================= 
+          target: skeleton              
+         ================================= -->
+	<target name="skeleton" depends="init, createDir, fillSkeleton" description="generate an ebook skeleton">
+		<echo>Skeleton created in ${epb.filename} directory</echo>
+	</target>
+
+	<!-- ================================= 
+          target: cleanFiles              
+         ================================= -->
+	<target name="cleanFiles" depends="init, skeleton" description="clean the epub content">
+		<foreach target="cleanFile" param="filename">
+			<path>
+				<fileset refid="xhtmlFiles" />
+				<fileset dir="out/${epb.filename}/OEBPS">
+					<include name="toc.xhtml" />
+				</fileset>
+			</path>
+		</foreach>
+	</target>
+
+	<!-- ================================= 
+          target: pack              
+         ================================= -->
+	<target name="pack" depends="init, cleanFiles, packSystemZip, packAnt" description="package the epub file">
+
+	</target>
+
+	<!-- Ant zip is a little neglicted cunt, use unix system zip command -->
+	<target name="packSystemZip" depends="init, cleanFiles" if="${useSystemZip}">
+		<delete file="${outfile}" />
+		<!-- Create the epub wityh the mimetype uncompressed -->
+		<exec executable="zip">
+			<arg value="-X0" />
+			<arg value="-j" />
+			<arg value="${outfile}" /><!-- the archive -->
+			<arg value="out/${epb.filename}/mimetype" /><!-- the file(s) -->
+		</exec>
+		<!-- Add and compress the rest of files -->
+		<exec dir="out/${epb.filename}" executable="zip">
+			<arg value="-X9" />
+			<arg value="-r" />
+			<arg value="../../${outfile}" /><!-- the archive -->
+			<arg value="OEBPS" />
+			<arg value="META-INF" /><!-- the file(s) -->
+		</exec>
+		<delete dir="out/${epb.filename}" />
+	</target>
+
+	<!-- code based upon http://inasmuch.as/2010/12/10/ant-for-epub/ as ant way to deal with zip order is a pain in the arse -->
+	<target name="packAnt" depends="init, cleanFiles" unless="${useSystemZip}">
+		<!-- delete file if already exists -->
+		<delete file="${outfile}" />
+		<!-- The 'mimetype' file is supposed to be uncompressed and the first thing in the .epub file so the file conforms to the
+	       (rather long) signature for EPUB files. -->
+		<zip destfile="out/${epb.filename}.mimetype" compress="false" encoding="UTF-8" createUnicodeExtraFields="never">
+			<fileset dir="out/${epb.filename}" includes="mimetype" />
+		</zip>
+		<!-- We'd really rather have the rest compressed, thank you. -->
+		<zip destfile="out/${epb.filename}.zip" compress="true" encoding="UTF-8" level="9" createUnicodeExtraFields="never">
+			<fileset dir="out/${epb.filename}">
+				<include name="**/*" />
+				<exclude name="mimetype" />
+			</fileset>
+		</zip>
+		<!-- Putting them together this way is the best way so far found for getting only 'mimetype' uncompressed in the .epub. -->
+		<zip destfile="${outfile}" update="true" keepcompression="true" encoding="UTF-8" createUnicodeExtraFields="never">
+			<zipfileset src="out/${epb.filename}.mimetype" />
+			<zipfileset src="out/${epb.filename}.zip" />
+		</zip>
+		<!-- Delete the temporary Zip files. -->
+		<delete file="out/${epb.filename}.mimetype" />
+		<delete file="out/${epb.filename}.zip" />
+		<!-- delete the temporary directory -->
+		<delete dir="out/${epb.filename}" />
+	</target>
+
+	<!-- ================================= 
+          target: check              
+         ================================= -->
+	<target name="check" depends="init, pack" description="pass the generated epub to epubcheck">
+		<epubcheck file="${outfile}" />
+	</target>
+
+
+	<!-- ================================= 
+          target: clean              
+         ================================= -->
+	<target name="clean" depends="init" description="clean the output directory">
+		<delete>
+			<fileset dir="out">
+				<include name="**/*" />
+			</fileset>
+		</delete>
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - 
+          other (non public) targets                      
+         - - - - - - - - - - - - - - - - - -->
+
+	<target name="init">
+		<!-- Create the time stamp -->
+		<tstamp>
+			<format property="date" pattern="yyyy-MM-dd" />
+			<format property="hour" pattern="hh:mm:ss" />
+		</tstamp>
+		<echo>${date} ${hour} : building from ${epb.filename} to epub${target} with uid = ${epb.uid} and isbn = ${epb.isbn}</echo>
+	</target>
+
+
+	<target name="cleanFile">
+		<echo>Cleaning ${filename}</echo>
+		<!-- useless tagging - only some inline (ie </i><i> or </b> <b>) - only when sure no classes or ids are used on this tags -->
+		<replaceregexp match="&lt;/([i|em|b|strong|s|strike|u])&gt;( )?&lt;\1&gt;" replace=" " file="${filename}" />
+		<!-- TODO : if such a tag is inside an other identical -->
+		<!-- entities and characters problems -->
+		<replace replacefilterfile="tools/entities.properties" file="${filename}" />
+		<replace replacefilterfile="tools/clean.properties" file="${filename}" />
+		<replace replacefilterfile="tools/entitiesclean.properties" file="${filename}" />
+		<!-- remove illegal html attributes -->
+		<if>
+			<equals arg1="${target}" arg2="3" />
+			<then>
+				<replaceregexp match=" width=&quot;[^&quot;]*&quot;" replace="" file="${filename}" />
+				<replaceregexp match=" height=&quot;[^&quot;]*&quot;" replace="" file="${filename}" />
+				<replaceregexp match="&lt;meta http\-equiv=&quot;Content\-Type&quot;[^&gt;]*&gt;" replace="" file="${filename}" />
+				<replaceregexp match="&lt;!DOCTYPE html PUBLIC[^&gt;]*&gt;" replace="" file="${filename}" />
+			</then>
+		</if>
+		<antcall target="specificReplace" />
+		<!-- TODO other cleaning ? -->
+	</target>
+
+	<target name="createDir" depends="init">
+		<echo>Creating directory ${epb.filename}</echo>
+		<mkdir dir="out"/>
+		<delete dir="out/${epb.filename}" />
+		<!-- delete if already exists -->
+		<mkdir dir="out/${epb.filename}" />
+		<echo>Copying data and templates into ${epb.filename}</echo>
+		<mkdir dir="out/${epb.filename}/META-INF"/>
+		<copy todir="out/${epb.filename}">
+			<fileset dir="${base}">
+				<exclude name="mimetype" />
+				<include name="META-INF/**/*" />
+				<exclude name="META-INF/container.xml" />
+				<include name="OEBPS/**/*" />
+				<exclude name="OEBPS/*.opf" />
+				<exclude name="OEBPS/*.ncx" />
+			</fileset>
+		</copy>
+		<if>
+			<isset property="overwrite" />
+			<then>
+				<echo>Overwriting using directory ${overwrite}</echo>
+				<copy todir="out/${epb.filename}" overwrite="true">
+					<fileset dir="${overwrite}">
+						<exclude name="mimetype" />
+						<include name="META-INF/**/*" />
+						<exclude name="META-INF/container.xml" />
+						<include name="OEBPS/**/*" />
+						<exclude name="OEBPS/*.opf" />
+						<exclude name="OEBPS/*.ncx" />
+					</fileset>
+				</copy>
+			</then>
+		</if>
+		<!-- adding mandatory mimetype and container file -->
+		<copy todir="out/${epb.filename}" overwrite="true" file="template/mimetype" />
+		<copy todir="out/${epb.filename}/META-INF" overwrite="true" file="template/container.xml" />
+		<if>
+			<equals arg1="${target}" arg2="2" />
+			<then>
+				<copy todir="out/${epb.filename}/OEBPS" overwrite="true" file="template/toc.ncx" />
+				<copy tofile="out/${epb.filename}/OEBPS/content.opf" overwrite="true" file="template/content_epub2.opf" />
+			</then>
+			<else>
+				<copy tofile="out/${epb.filename}/OEBPS/content.opf" overwrite="true" file="template/content_epub3.opf" />
+			</else>
+		</if>
+	</target>
+
+	<target name="fillSkeleton" depends="init, createDir">
+		<echo>Filling the metadata</echo>
+		<!-- FIXME : here, fuck, find a way to use properties so the file can be ignored to use default values 
+		<replace file="out/${epb.filename}/OEBPS/content.opf" replacefilterfile="${base}/metadata.properties" />-->
+		<replace file="out/${epb.filename}/OEBPS/content.opf" token="epb.author" value="${epb.author}" />
+		<replace file="out/${epb.filename}/OEBPS/content.opf" token="epb.coverFile" value="${epb.coverFile}" />
+		<replace file="out/${epb.filename}/OEBPS/content.opf" token="epb.filename" value="${epb.filename}" />
+		<replace file="out/${epb.filename}/OEBPS/content.opf" token="epb.isbn" value="${epb.isbn}" />
+		<replace file="out/${epb.filename}/OEBPS/content.opf" token="epb.uid" value="${epb.uid}" />
+		<replace file="out/${epb.filename}/OEBPS/content.opf" token="epb.lang" value="${epb.lang}" />
+		<replace file="out/${epb.filename}/OEBPS/content.opf" token="epb.publisher" value="${epb.publisher}" />
+		<replace file="out/${epb.filename}/OEBPS/content.opf" token="epb.tags" value="${epb.tags}" />
+		<replace file="out/${epb.filename}/OEBPS/content.opf" token="epb.title" value="${epb.title}" />
+		<if>
+			<equals arg1="${target}" arg2="2" />
+			<then>
+				<!-- FIXME : here, fuck, find a way to use properties so the file can be ignored to use default values 
+						<replace file="out/${epb.filename}/OEBPS/toc.ncx" replacefilterfile="${base}/metadata.properties" /> -->
+
+				<replace file="out/${epb.filename}/OEBPS/toc.ncx" token="epb.author" value="${epb.author}" />
+				<replace file="out/${epb.filename}/OEBPS/toc.ncx" token="epb.coverFile" value="${epb.coverFile}" />
+				<replace file="out/${epb.filename}/OEBPS/toc.ncx" token="epb.filename" value="${epb.filename}" />
+				<replace file="out/${epb.filename}/OEBPS/toc.ncx" token="epb.isbn" value="${epb.isbn}" />
+				<replace file="out/${epb.filename}/OEBPS/toc.ncx" token="epb.uid" value="${epb.uid}" />
+				<replace file="out/${epb.filename}/OEBPS/toc.ncx" token="epb.lang" value="${epb.lang}" />
+				<replace file="out/${epb.filename}/OEBPS/toc.ncx" token="epb.publisher" value="${epb.publisher}" />
+				<replace file="out/${epb.filename}/OEBPS/toc.ncx" token="epb.tags" value="${epb.tags}" />
+				<replace file="out/${epb.filename}/OEBPS/toc.ncx" token="epb.title" value="${epb.title}" />
+
+				<replace file="out/${epb.filename}/OEBPS/toc.ncx" token="$${date}" value="${date}" />
+				<replace file="out/${epb.filename}/OEBPS/content.opf" token="$${date}" value="${date}" />
+			</then>
+			<else>
+				<replace file="out/${epb.filename}/OEBPS/content.opf" token="$${date}" value="${date}T${hour}Z" />
+			</else>
+		</if>
+		<!-- TODO : rest of filling -->
+		<epub base="${base}" coverimage="${epb.coverFile}" dir="out/${epb.filename}" toctitle="Sommaire" target="${target}" lang="${epb.lang}" />
+	</target>
+
+
+	<target name="specificCheck">
+		<available file="${base}/replace.properties" property="replace.present"/>
+	</target>
+
+	<target name="specificReplace" depends="specificCheck" if="replace.present">
+		<replace file="${filename}" replacefilterfile="${base}/metadata.properties" />
+	</target>
+
+	<!-- clean the filenames of input xhtml files -->
+	<target name="unifyNames" description="rename correctly input files">
+		<echo>Renaming files</echo>
+		<foreach target="unifyName" param="filename">
+			<path>
+				<fileset refid="inXhtmlFiles" />
+			</path>
+		</foreach>
+	</target>
+
+	<target name="unifyName">
+		<propertycopy name="newFilename" from="filename" />
+		<propertyregex property="newFilename" input="${newFilename}" override="true"
+			regexp=" " replace="_" />
+		<propertyregex property="newFilename" input="${newFilename}" override="true"
+			regexp="[']" replace="_" />
+		<propertyregex property="newFilename" input="${newFilename}" override="true"
+			regexp="[àâä]" replace="a" />
+		<propertyregex property="newFilename" input="${newFilename}" override="true"
+			regexp="[éèêë]" replace="e" />
+		<propertyregex property="newFilename" input="${newFilename}" override="true"
+			regexp="[îï]" replace="i" />
+		<propertyregex property="newFilename" input="${newFilename}" override="true"
+			regexp="[ôö]" replace="o" />
+		<propertyregex property="newFilename" input="${newFilename}" override="true"
+			regexp="[ûü]" replace="u" />
+		<propertyregex property="newFilename" input="${newFilename}" override="true"
+			regexp="[œ]" replace="oe" />
+		<propertyregex property="newFilename" input="${newFilename}" override="true"
+			regexp="[æ]" replace="ae" />
+		<propertyregex property="newFilename" input="${newFilename}" override="true"
+			regexp="[ç]" replace="c" />
+		<!-- TODO the same with capitalized letters -->
+		<echo>Renaming ${filename} to ${newFilename}</echo>
+		<move file="${filename}" tofile="${newFilename}" />
+	</target>
+
+
+	<!-- ================================= 
+          target: makeIndex              
+         ================================= -->
+	<target name="makeIndex" depends="unifyNames" description="list input files for index in alphabetic order">
+		<foreach target="echoFileName" param="filename">
+			<path>
+				<fileset refid="inXhtmlFiles" />
+			</path>
+		</foreach>
+	</target>
+
+	<target name="echoFileName">
+		<basename file="${filename}" property="name"/>
+		<echo>${name}</echo>
+	</target>
+
+
+
+	<!-- ================================= 
+          target: buildScript // BUGGED
+         ================================= -->
+	<target name="buildScript" description="Build a bat script, target independant of all the rest">
+		<echo>building a script for base=${base}, target=${target}, outfile=${outfile}, overwrite=${overwrite}</echo>
+		<echo file="${outfile}">echo Starting creation of Sales Betes epubs
+set CLASSPATH=%CLASSPATH%;\bin</echo>
+		<foreach target="buildScriptAux" param="ovrwrtfile">
+			<path>
+				<dirset dir="${overwrite}" includes="*">
+				</dirset>
+			</path>
+		</foreach>
+		<echo file="${outfile}" append="true">
+echo Finished epubs creation</echo>
+	</target>
+
+	<target name="buildScriptAux">
+		<basename property="ovrwrtfilename" file="${ovrwrtfile}"/>
+		<echo file="${outfile}" append="true">
+call ant pack -Dbase=${base} -Dtarget=${target} -Doverwrite=${ovrwrtfile} -Doutfile=out/${epb.filename}-${ovrwrtfilename}.epub</echo>
+	</target>
+
+
+	<!-- ================================= 
+          target: loop              
+         ================================= -->
+	<target name="loop" description="loop over several overwrite alternative and recursively call the ant task, target independant of all the rest">
+		<foreach target="loopiteration" param="ovrwrtfile">
+			<path>
+				<dirset dir="${overwriteDir}" includes="*">
+				</dirset>
+			</path>
+		</foreach>
+	</target>
+
+	<target name="loopiteration">
+		<basename property="ovrwrtfilename" file="${ovrwrtfile}"/>
+		<echo>Loop Iteration : Creating file out/${epb.filename}-${ovrwrtfilename}.epub with -Dbase=${base} -Dtarget=${target} -Doverwrite=${ovrwrtfile}</echo>
+		<antcall target="all" inheritall="false">
+			<param name="base" value="${base}"/>
+			<param name="target" value="${target}"/>
+			<param name="overwrite" value="${ovrwrtfile}"/>
+			<param name="outfile" value="out/${epb.filename}-${ovrwrtfilename}.epub"/>
+		</antcall>
+	</target>
+
+	<!-- ================================= 
+          target: onlyEpubCheck              
+         ================================= -->
+    <target name="onlyEpubCheck" depends="init" description="indicate an epub file with -Depb.filename and check it">
+    	<epubcheck file="${epb.filename}" />
+    </target>
+
+	
+</project>
