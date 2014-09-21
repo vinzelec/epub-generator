@@ -7,6 +7,12 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * Should probably be replaced by apache commons IO...
+ * 
+ * @author Vinze
+ *
+ */
 public abstract class IOUtils {
 
 	public static void replace(File file, String regex, String replacement) throws IOException {

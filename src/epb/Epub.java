@@ -77,6 +77,8 @@ public class Epub extends Task {
 		}
 		String firstElem = csv.get(0)[0];
 		int startIndex = 0;
+		// legacy mode : in first version in index.csv a line could start with it's playOrder
+		// now by default if lines don't start with a number it is considered sorted (playOrder not mandatory)
 		try {
 			Integer.parseInt(firstElem);
 			log("sorting CSV content");
