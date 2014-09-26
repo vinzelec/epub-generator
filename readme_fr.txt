@@ -3,9 +3,11 @@ Le but de cet ensemble de script est de créer un epub "propre" en partant d'un e
 Il nécessite que soit installé :
 - le programme ant (>1.7) (téléchargeable : http://ant.apache.org/)
 
-Actuellement le script ne fonctionne correctement qu'en lignes de commandes sur un système linux
+Actuellement le script ne fonctionne correctement qu'en lignes de commandes
 à cause de la structure zip du format opf que la tâche "zip" de ant ne permet pas de respecter...
 il faut donc utiliser le script avec l'option -DuseSystemZip=true pour utiliser la commande zip du système...
+sous linux, zip est par défaut, sous windows il faut télécharger les éxécutables unix (http://sourceforge.net/projects/unxutils/files/latest/download)
+et les ajouter au PATH pour le même résultat.
 
 NB : j'ai testé une demi-douzaine de solutions avec la tâche zip de ant sans succès mais si vous avez une solution je suis preneur.
 
