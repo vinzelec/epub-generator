@@ -254,6 +254,7 @@ public class Epub extends Task {
 		File textDir = new File(baseDir, "/OEBPS/text");
 		File imgDir = new File(baseDir, "/OEBPS/images");
 		File styleDir = new File(baseDir, "/OEBPS/styles");
+		File fontsDir = new File(baseDir, "/OEBPS/fonts");
 		if (textDir.exists()) {
 			String[] texts = textDir.list(new FilenameFilter() {
 				@Override
@@ -293,6 +294,21 @@ public class Epub extends Task {
 					sb.append(" media-type=\"image/png\" />");
 				sb.append("\n");
 			}
+			// if license or readme included
+			String[] texts = imgDir.list(new FilenameFilter() {
+				@Override
+				public boolean accept(File dir, String name) {
+					return name.endsWith(".txt");
+				}
+			});
+			for (int i = 0; i < texts.length; i++) {
+				log("creating manifest item for " + texts[i]);
+				String href = "images/" + texts[i];
+				String id = texts[i];
+				sb.append("<item id=\"").append(id).append("\" href=\"")
+						.append(href);
+				sb.append("\" media-type=\"text/plain\" />").append("\n");
+			}
 		}
 		if (styleDir.exists()) {
 			String[] styles = styleDir.list(new FilenameFilter() {
@@ -308,6 +324,52 @@ public class Epub extends Task {
 				sb.append("<item id=\"").append(id).append("\" href=\"")
 						.append(href);
 				sb.append("\" media-type=\"text/css\" />").append("\n");
+			}
+			// if license or readme included
+			String[] texts = styleDir.list(new FilenameFilter() {
+				@Override
+				public boolean accept(File dir, String name) {
+					return name.endsWith(".txt");
+				}
+			});
+			for (int i = 0; i < texts.length; i++) {
+				log("creating manifest item for " + texts[i]);
+				String href = "styles/" + texts[i];
+				String id = texts[i];
+				sb.append("<item id=\"").append(id).append("\" href=\"")
+						.append(href);
+				sb.append("\" media-type=\"text/plain\" />").append("\n");
+			}
+		}
+		if (fontsDir.exists()) {
+			String[] fonts = fontsDir.list(new FilenameFilter() {
+				@Override
+				public boolean accept(File dir, String name) {
+					return name.endsWith(".otf");
+				}
+			});
+			for (int i = 0; i < fonts.length; i++) {
+				log("creating manifest item for " + fonts[i]);
+				String href = "fonts/" + fonts[i];
+				String id = fonts[i];
+				sb.append("<item id=\"").append(id).append("\" href=\"")
+						.append(href);
+				sb.append("\" media-type=\"font/opentype\" />").append("\n");
+			}
+			// if license or readme included
+			String[] texts = fontsDir.list(new FilenameFilter() {
+				@Override
+				public boolean accept(File dir, String name) {
+					return name.endsWith(".txt");
+				}
+			});
+			for (int i = 0; i < texts.length; i++) {
+				log("creating manifest item for " + texts[i]);
+				String href = "fonts/" + texts[i];
+				String id = texts[i];
+				sb.append("<item id=\"").append(id).append("\" href=\"")
+						.append(href);
+				sb.append("\" media-type=\"text/plain\" />").append("\n");
 			}
 		}
 		return sb.toString();

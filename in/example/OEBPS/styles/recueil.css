@@ -1,7 +1,15 @@
 @namespace h "http://www.w3.org/1999/xhtml";
+
+@font-face {
+  font-family : EBGaramond;
+  font-weight : normal;
+  font-style: normal;
+  src : url(../fonts/EBGaramond08-Regular.otf);
+}
+
 p
 {
-    font-family:"Garamond", Times, serif;
+    font-family:"EBGaramond", serif;
     margin:5pt 0pt;
     text-indent: 2.00em;
     text-align: justify;
