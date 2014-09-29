@@ -361,31 +361,6 @@
 	</target>
 
 
-
-	<!-- ================================= 
-          target: buildScript // BUGGED
-         ================================= -->
-	<target name="buildScript" description="Build a bat script, target independant of all the rest">
-		<echo>building a script for base=${base}, target=${target}, outfile=${outfile}, overwrite=${overwrite}</echo>
-		<echo file="${outfile}">echo Starting creation of Sales Betes epubs
-set CLASSPATH=%CLASSPATH%;\bin</echo>
-		<foreach target="buildScriptAux" param="ovrwrtfile">
-			<path>
-				<dirset dir="${overwrite}" includes="*">
-				</dirset>
-			</path>
-		</foreach>
-		<echo file="${outfile}" append="true">
-echo Finished epubs creation</echo>
-	</target>
-
-	<target name="buildScriptAux">
-		<basename property="ovrwrtfilename" file="${ovrwrtfile}"/>
-		<echo file="${outfile}" append="true">
-call ant pack -Dbase=${base} -Dtarget=${target} -Doverwrite=${ovrwrtfile} -Doutfile=out/${epb.filename}-${ovrwrtfilename}.epub</echo>
-	</target>
-
-
 	<!-- ================================= 
           target: loop              
          ================================= -->

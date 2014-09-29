@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     29 sept. 2014                                     
+
+     compile the specific tasks used in build.xml
+                   
+     Vinze                                                                
+     ====================================================================== -->
+<project name="ebooks" default="compile">
+	<description>
+        compile the specific tasks used in build.xml
+    </description>
+
+	<path id="libs">
+		<fileset dir="lib">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+	
+	<target name="compile">
+		<delete file="bin" />
+		<mkdir dir="bin"/>
+		<!-- compile specific tasks -->
+		<javac srcdir="src" destdir="bin">
+			<classpath refid="libs" />
+		</javac>
+    </target>
+
+</project>

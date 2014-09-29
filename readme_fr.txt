@@ -4,6 +4,10 @@ Il nécessite que soit installé :
 - un environnement Java (jre 1.6 min)
 - le programme ant (1.9) (téléchargeable : http://ant.apache.org/)
 
+Avant d'utiliser le script il est nécessaire de l'initialiser en tapant la ligne de commande suivante :
+> ant -f compile.xml
+
+
 Actuellement le script ne fonctionne correctement qu'en lignes de commandes
 à cause de la structure zip du format opf que la tâche "zip" de ant ne permet pas de respecter...
 il faut donc utiliser le script avec l'option -DuseSystemZip=true pour utiliser la commande zip du système...
