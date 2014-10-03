@@ -98,16 +98,62 @@ The second (optional) metadata file is called `contributors.properties` and is u
 The keys are [MARC relators](http://www.loc.gov/marc/relators/relaterm.html) and the values a comma-separated list of contributors.  
 For example:
 
-    ill = a guy that did an illustration, another illustrator  
+    ill = a person that did an illustration, another illustrator  
     crr = the person that did the correction  
     edt = the editor  
 
 
 ####The optional replace.properties file
-TODO
+During the ebook creation, a task of cleaning is performed on every XHTML file (mostly to clean the xhtml export that creates code like &lt;b>This&lt;/b>&lt;b> &lt;/b>&lt;b>sentence&lt;/b>&lt;b>.&lt;/b>)  
+(as a consequence classes should not be placed on tags `i|em|b|strong|s|strike|u` to avoid the cleaning to change the code behavior)
+  
+In addition to automatic cleaning process, a special mechanism to perform specific replacement is implemented. It is used by adding an optional `replace.properties` file
+where the key is the matching pattern (according to [Ant replace task](https://ant.apache.org/manual/Tasks/replace.html)) and the value the replacement.  
+Example:
+
+    <p>— : <p class\="dialogue">—    
+    <p class\="center">*</p> : <p class\="separator">*</p>
+    
     
     
 Run the script
 --------------
 
-TODO
+###default script use
+Once the project is set up, the script can be run (from command line in epub-generator folder) by calling the program `ant`.  
+One parameter is mandatory : `-Dbase` that indicate the path to the `my-book` folder.  
+For example : `ant -Dbase=in/my-book`  
+
+Then there is several optional parameter :
+
+* `-Dtarget` indicates which version of epub is to be generated. The authorized values are `2` and `3` (default value is `3`)  
+* `-DuseSystemZip` indicates to use the system `zip` command instead of ant task. The authorized values are `true` and `false` (default value is `false` but due to a bug – issue #2 – this has to be set to true)  
+* `-Doutfile` allows to select an output filename that is different to the one defined in `metadata.properties`. For example `-Doutfile=another.epub` (the name must contain the .epub extension)  
+* `-Doverwrite` allows to indicate the path to a folder to use to overwrite some files from default base folder. It allows to create an alternative version of the book without having to modify the source.
+
+###other tasks available
+You can list all available target by typing the command `ant -p`. Here are the list and a description on how to use it.  
+Any task can be called by addind the name as first argument of the `ant` program (before all the `-D` parameters): `ant all` for example.
+
+####partial epub construction
+This script performs several steps, it is possible to stop the process in the middle. Of course some parameters have no impact on some target (`overwrite` is used since `skeleton`, but `useSystemZip` won't be used until `pack`)
+
+> skeleton: generates an ebook skeleton (folder structure, with files included generated ones)  
+> cleanFiles: cleans the xhtml content (performs the cleaning of all xhtml files)  
+> pack: packages the epub file (zips the skeleton into an epub file)  
+> all: default behavior: creates the epub file then checks it's validity  
+
+Example: `ant skeleton -Dbase=in/example -Dtarget=2` to create only a folder with files for an epub2 format.  
+
+
+####other tasks
+Following are tasks that don't belong to default behavior of the script but revealed to be useful. `clean` and `onlyEpubCheck` are the only targets that don't require the parameter `-Dbase`.
+
+> clean: cleans the 'out' directory (removes all generated files)  
+> unifyNames: renames correctly (no space or accented letter) input xhtml files within -Dbase '/OEBPS/text' folder  
+> makeIndex: list files in 'OEBPS/text' in alphabetic order to help create an index.csv file  
+> onlyEpubCheck: checks validity for an epub file indicated with -Depb.filename  
+> loop: loops over several overwrite alternative and recursively call the main task, -Doverwrite must be the path to a folder where each folder as a book structure
+(all output file names will be the ones of the overwriting folder)
+
+Example: `ant loop -Dbase=in/example -Doverwrite=ext/folder-of-all-overwrite` to create several alternatives of the book from a folder of overwrite.
