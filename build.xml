@@ -71,21 +71,22 @@
 	<!-- ================================= 
           target: all              
          ================================= -->
-	<target name="all" depends="init, skeleton, cleanFiles, pack, check" description="Pass all the targets">
+	<target name="all" depends="init, skeleton, cleanFiles, pack" description="default behavior: creates the epub file then checks it's validity">
+		<epubcheck file="${outfile}" />
 	</target>
 
 
 	<!-- ================================= 
           target: skeleton              
          ================================= -->
-	<target name="skeleton" depends="init, createDir, fillSkeleton" description="generate an ebook skeleton">
+	<target name="skeleton" depends="init, createDir, fillSkeleton" description="generates an ebook skeleton (folder structure, with files included generated ones)">
 		<echo>Skeleton created in ${epb.filename} directory</echo>
 	</target>
 
 	<!-- ================================= 
           target: cleanFiles              
          ================================= -->
-	<target name="cleanFiles" depends="init, skeleton" description="clean the epub content">
+	<target name="cleanFiles" depends="init, skeleton" description="cleans the xhtml content (performs the cleaning of all xhtml files)">
 		<foreach target="cleanFile" param="filename">
 			<path>
 				<fileset refid="xhtmlFiles" />
@@ -99,7 +100,7 @@
 	<!-- ================================= 
           target: pack              
          ================================= -->
-	<target name="pack" depends="init, cleanFiles, packSystemZip, packAnt" description="package the epub file">
+	<target name="pack" depends="init, cleanFiles, packSystemZip, packAnt" description="packages the epub file (zips the skeleton into an epub file)">
 
 	</target>
 
@@ -152,18 +153,11 @@
 		<delete dir="out/${epb.filename}" />
 	</target>
 
-	<!-- ================================= 
-          target: check              
-         ================================= -->
-	<target name="check" depends="init, pack" description="pass the generated epub to epubcheck">
-		<epubcheck file="${outfile}" />
-	</target>
-
 
 	<!-- ================================= 
           target: clean              
          ================================= -->
-	<target name="clean" depends="init" description="clean the output directory">
+	<target name="clean" depends="init" description="cleans the 'out' directory (removes all generated files)">
 		<delete>
 			<fileset dir="out">
 				<include name="**/*" />
@@ -306,8 +300,17 @@
 		<replace file="${filename}" replacefilterfile="${base}/metadata.properties" />
 	</target>
 
-	<!-- clean the filenames of input xhtml files -->
-	<target name="unifyNames" description="rename correctly input files">
+	
+	<!-- ******************************** -->
+	<!-- ******** others tasks ********** -->
+	<!-- ******************************** -->
+	
+
+	<!-- ================================= 
+          target: unifyNames
+          clean the filenames of input xhtml files        
+         ================================= -->
+	<target name="unifyNames" description="renames correctly (no space or accented letter) input xhtml files within -Dbase '/OEBPS/text' folder">
 		<echo>Renaming files</echo>
 		<foreach target="unifyName" param="filename">
 			<path>
@@ -347,7 +350,7 @@
 	<!-- ================================= 
           target: makeIndex              
          ================================= -->
-	<target name="makeIndex" depends="unifyNames" description="list input files for index in alphabetic order">
+	<target name="makeIndex" depends="unifyNames" description="list files in 'OEBPS/text' in alphabetic order to help create an index.csv file">
 		<foreach target="echoFileName" param="filename">
 			<path>
 				<fileset refid="inXhtmlFiles" />
@@ -364,7 +367,7 @@
 	<!-- ================================= 
           target: loop              
          ================================= -->
-	<target name="loop" description="loop over several overwrite alternative and recursively call the ant task, target independant of all the rest">
+	<target name="loop" description="loops over several overwrite alternative and recursively call the main task, -Doverwrite must be the path to a folder where each folder as a book structure">
 		<foreach target="loopiteration" param="ovrwrtfile">
 			<path>
 				<dirset dir="${overwriteDir}" includes="*">
@@ -387,7 +390,7 @@
 	<!-- ================================= 
           target: onlyEpubCheck              
          ================================= -->
-    <target name="onlyEpubCheck" depends="init" description="indicate an epub file with -Depb.filename and check it">
+    <target name="onlyEpubCheck" depends="init" description="checks validity for an epub file indicated with -Depb.filename">
     	<epubcheck file="${epb.filename}" />
     </target>
 
