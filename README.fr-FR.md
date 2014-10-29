@@ -20,7 +20,7 @@ Puis dans le répertoire d'epub-generator il faut lancer la commande `ant -f comp
 À cause de la manière dont la tâche 'zip' est implémentée dans ant (et java) and avec les requis du standard OPF,
 le script ne fonctionne qu'avec la commande zip du système (activée avec l'option `-DuseSystemZip=true`).
 Cette commande existe par défaut dans les système unix mais doit être installée pour windows.
-Vous pouvez trouver  [un jeu de commandes unix](http://sourceforge.net/projects/unxutils/files/latest/download) 
+Vous pouvez trouver [un jeu de commandes unix](http://sourceforge.net/projects/unxutils/files/latest/download) 
 contenant une version de zip (une fois dézippé n'importe où, la commande doit être ajoutée au path utilisateur)
 
 ###Nota Bene sur XHTML
@@ -49,29 +49,31 @@ Voici la structure classique avec laquelle travailler
             +- text (y mettre les fichiers des textes au format .xhtml)
     
 ###Le sommaire (table of content)
-Within the my-book folder, the file `index.csv` will be used to automatically generate the table of content :
+Dans le répertoire my-book, le fichier `index.csv` va être utilisé pour créer le sommaire :
 
-* the toc.ncx file for epub2;
-* the toc.xhtml using epub3 and to be included within the book.
+* le fichier toc.ncx utilisé par epub2;
+* le fichier toc.xhtml utilisé epub3 et utilisable dans l'ebook.
 
-####toc.part files
-As the xhtml file for the table of content can be generated and included into the book, you can customize it by putting optionnal files in my-book :
+####fichiers toc.part
+Comme le fichier xhtml du sommaire peut être inclus dans le livre, vous pouvez le customiser en ajouter des fichiers dans my-book :
 
-* header-toc.part : add html code in the header (add css import for example);
-* pre-toc.part : add html code before the `nav` (or `ul` if generating epub2) element (if absent a `h2` title will be generated using the entry in index.csv file, see below);
-* post-toc.part : add html code after the `nav` (or `ul` if generating epub2) element.
+* header-toc.part : ajoute du code html dans le header (par exemple pour ajouter un import CSS) ;
+* pre-toc.part : ajoute du code html avant l'élément `nav` (ou `ul` si on génère du epub2) 
+(si absent, un titre `h2` est ajouté utilisant l'entrée du fichier index.csv, voir ci-dessous) ;
+* post-toc.part : ajoute du code html après l'élément `nav` (ou `ul` si on génère du epub2).
 
-####index.csv file detail
-This file will be used to generate the table of content and order the pages of the ebook.  
-Each line represent an entry for a file.  
-Each line has the following format : `(playOrder;)file;depth;type*;(title)`  
-* playOrder is optional (if not present, the file is supposed sorted).
-* The file is relative to the my-book directory.
-* The depth start at index 0 (first-level) and use to create hierarchy (chapter, sub-chapter...).
-* The type is keyword from [Epub vocabulary](http://idpf.org/epub/vocab/structure/) that will be included into file for epub 3 format (it is assume xhtml don't already embed epub3 metadata)
-* The title is the display name of the entry within the table of content, if omitted the entry will be played in the book but won't be indexed in the table of content.
+####détail du fichier index.csv
+ce fichier est utilisé pour générer le sommaire et l'ordre de lecture des pages du livre.  
+Chaque ligne est une entrée pour un fichier
+Chaque ligne suit le format suivant : `(playOrder;)fichier;profondeur;type*;(titre)`  
 
-From the example:
+* playOrder est optionnel (en cas d'absence, le fichier est considéré déjà trié),
+* Le chemin du fichier est relatif au répertoire my-book,
+* La profondeur débute à l'index 0 (premier niveau) et est utilisée pour créer la hiérarchie (chapitre, sous-chapitre...),
+* Le type est un mot-clef issu du [vocabulaire Epub](http://idpf.org/epub/vocab/structure/) qui sera inclus dans les fichiers pour epub3 (on suppose que les fichiers xhtml ne contiennent pas de métadonnées epub3)
+* Le titre est le nom à afficher pour l'entrée dans le sommaire ; s'il est absent, l'entrée sera inclus dans l'ordre de lecture mais n'apparaîtra pas au sommaire généré.
+
+Exemple :
 
     OEBPS/text/00_-_1_cover.xhtml;0;cover; Couverture  
     OEBPS/text/00_-_2_title.xhtml;0;titlepage; Page de titre  
