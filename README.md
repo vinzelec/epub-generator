@@ -63,7 +63,8 @@ As the xhtml file for the table of content can be generated and included into th
 ####index.csv file detail
 This file will be used to generate the table of content and order the pages of the ebook.  
 Each line represent an entry for a file.  
-Each line has the following format : `(playOrder;)file;depth;type*;(title)`  
+Each line has the following format : `(playOrder;)file;depth;type*;(title)`
+
 * playOrder is optional (if not present, the file is supposed sorted).
 * The file is relative to the my-book directory.
 * The depth start at index 0 (first-level) and use to create hierarchy (chapter, sub-chapter...).
