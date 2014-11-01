@@ -83,58 +83,58 @@ Exemple :
     OEBPS/text/02_-_credits.xhtml;0;backmatter; Crédits  
 
 ###The metadata files
-Within the my-book folder, 2 properties files will be used to generate the metadata of the generated epub.  
+Dans le répertoire my-book, deux fichiers properties sont utilisés pour compléter le fichier epub généré.  
 
 ####metadata.properties
-The first and only mandatory is called `metadata.properties` (don't know why for french ebooks it is required to be in ISO-8859-1 while everything else is UTF-8 if there is any accented letter). The properties to set are the following:
+Le premier (et seul obligatoire) est `metadata.properties` (je ne sais pas trop pourquoi mais pour les lettre accentuées, ça bug à moins que le fichier soit en ISO-8859-1 alors que le reste est en UTF-8). Voici les propriétés à renseigner dans ce fichier :
 
-* epb.author = The author of the book
-* epb.filename = The file name to generate (the script will generate a out/filename-epub2.epub or out/filename-epub3.epub depending on parameters)
-* epb.publisher = The publisher of the book
-* epb.title = The title of the book
-* epb.lang = The... lang of the book
-* epb.tags = list of comma-separated tags (keywords for ebook indexing)
-* epb.coverFile = The path to the file used as cover (usually OEBPS/text/cover-file.xhtml)
+* epb.author = L'auteur du livre
+* epb.filename = Le nom du fichier à générer (le script va générer un fichier out/filename-epub2.epub ou out/filename-epub3.epub en fonction des paramètres)
+* epb.publisher = Le nom du publieur (éditeur puisqu'il n'y a pas de scission de ces deux notions dans l'édition française)
+* epb.title = Le titre du livre
+* epb.lang = La langue dans laquelle le livre est écrit
+* epb.tags = une liste de mots-clefs séparés par des virgules (pour l'indexation du fichier)
+* epb.coverFile = Le chemin du fichier à utiliser comme couverture (en général OEBPS/text/cover-file.xhtml)
 
 ####contributors.properties
-The second (optional) metadata file is called `contributors.properties` and is used to add contributors to the book.  
-The keys are [MARC relators](http://www.loc.gov/marc/relators/relaterm.html) and the values a comma-separated list of contributors.  
-For example:
+Le second fichier (optionnel) est `contributors.properties` qui sert à ajouter des contributeurs au livre.
+Les clefs des propriétés sont des [MARC relators](http://www.loc.gov/marc/relators/relaterm.html) et les valeurs associés une liste (séparés par des virgules) des personnes ayant rempli ce rôle.  
+Par exemple:
 
-    ill = a person that did an illustration, another illustrator  
-    crr = the person that did the correction  
-    edt = the editor  
+    ill = premier illustrateur, un autre illustrateur  
+    crr = le correcteur  
+    edt = l'éditeur  
 
 
-####The optional replace.properties file
-During the ebook creation, a task of cleaning is performed on every XHTML file (mostly to clean the xhtml export that creates code like &lt;b>This&lt;/b>&lt;b> &lt;/b>&lt;b>sentence&lt;/b>&lt;b>.&lt;/b>)  
-(as a consequence classes should not be placed on tags `i|em|b|strong|s|strike|u` to avoid the cleaning to change the code behavior)
+####Le fichier optionnel replace.properties
+Au cours de la création de l'ebook, une tâche de nettoyage est appliquée à chaque fichier XHTML (principalement pour nettoyer l'export xhtml qui crée du code comme &lt;b>Cette&lt;/b>&lt;b> &lt;/b>&lt;b>phrase&lt;/b>&lt;b>.&lt;/b>)  
+(par conséquent des classes ne doivent pas être placés sur les tags `i|em|b|strong|s|strike|u` pour éviter que cette tâche n'en change le comportement)
   
-In addition to automatic cleaning process, a special mechanism to perform specific replacement is implemented. It is used by adding an optional `replace.properties` file
-where the key is the matching pattern (according to [Ant replace task](https://ant.apache.org/manual/Tasks/replace.html)) and the value the replacement.  
-Example:
+En plus du processus de nettoyage automatique, un mécanisme spécial pour faire du remplacement spécifique est implémenté. Il s'utilise en ajoutant un fichier `replace.properties` où la clef est un pattern matching (respectant [la tâche Ant replace](https://ant.apache.org/manual/Tasks/replace.html))
+et la valeur est la chaîne de remplacement.  
+Exemple (ajout de classe pour les dialogues et les séparateurs) :
 
     <p>— : <p class\="dialogue">—    
     <p class\="center">*</p> : <p class\="separator">*</p>
     
     
     
-Run the script
---------------
+Exécuter le script
+------------------
 
-###default script use
-Once the project is set up, the script can be run (from command line in epub-generator folder) by calling the program `ant`.  
-One parameter is mandatory : `-Dbase` that indicate the path to the `my-book` folder.  
-For example : `ant -Dbase=in/my-book`  
+###utilisation par défaut du script
+Une fois le projet installé, le script se lance (en ligne de commande dans le répertoire epub-generator) en appelant le programme `ant`.  
+Un paramètre est obligatoire : `-Dbase` qui indique le chemin du répertoire `my-book`.  
+Par exemple : `ant -Dbase=in/my-book`  
 
-Then there is several optional parameter :
+Il y a ensuite différents paramètres optionnels :
 
-* `-Dtarget` indicates which version of epub is to be generated. The authorized values are `2` and `3` (default value is `3`)  
-* `-DuseSystemZip` indicates to use the system `zip` command instead of ant task. The authorized values are `true` and `false` (default value is `false` but due to a bug – issue #2 – this has to be set to true)  
-* `-Doutfile` allows to select an output filename that is different to the one defined in `metadata.properties`. For example `-Doutfile=another.epub` (the name must contain the .epub extension)  
-* `-Doverwrite` allows to indicate the path to a folder to use to overwrite some files from default base folder. It allows to create an alternative version of the book without having to modify the source.
+* `-Dtarget` indique la version d'epub à générer. Les valeurs possibles sont `2` et `3` (`3` par défaut)  
+* `-DuseSystemZip` indique d'utiliser la commande `zip` du système au lieu de la tâche ant. Les valeurs possibles sont `true` et `false` (`false` par défaut mais à cause du bug – issue #2 – il faut utiliser `true`)  
+* `-Doutfile` permets de sélectionner un fichier de sortie différent de celui définit dans `metadata.properties`. Par exemple `-Doutfile=another.epub` (le nom doit contenir l'extension .epub)  
+* `-Doverwrite` permets d'indiquer un chemin vers un répertoire à utiliser pour surcharger des fichiers du répertoire par défaut. Ainsi on peut créer une version alternative du livre sans en modifier les sources.
 
-###other tasks available
+###autres tâches disponibles
 You can list all available target by typing the command `ant -p`. Here are the list and a description on how to use it.  
 Any task can be called by addind the name as first argument of the `ant` program (before all the `-D` parameters): `ant all` for example.
 
