@@ -135,28 +135,30 @@ Il y a ensuite différents paramètres optionnels :
 * `-Doverwrite` permets d'indiquer un chemin vers un répertoire à utiliser pour surcharger des fichiers du répertoire par défaut. Ainsi on peut créer une version alternative du livre sans en modifier les sources.
 
 ###autres tâches disponibles
-You can list all available target by typing the command `ant -p`. Here are the list and a description on how to use it.  
-Any task can be called by addind the name as first argument of the `ant` program (before all the `-D` parameters): `ant all` for example.
+La liste des tâches disponibles peut être obtenue avec la commande `ant -p`. Voici la liste des tâches ansi que leurs descriptions et leur mode d'utilisation.  
+Une tâche s'appelle en ajoutant son nom comme premier argument de la commande `ant` (avant les paramètres en `-D`) : par example `ant all`.
 
-####partial epub construction
-This script performs several steps, it is possible to stop the process in the middle. Of course some parameters have no impact on some target (`overwrite` is used since `skeleton`, but `useSystemZip` won't be used until `pack`)
+####construction partielle de l'epub
+Le script se déroule en plusieurs étapes, il est possible d'arrêter le processus en cours. Bien sûr certains paramètres n'ont pas d'impact sur certaines target (`overwrite` est utilisé à partir de `skeleton`, mais `useSystemZip` ne l'est pas avant `pack`)
 
-> skeleton: generates an ebook skeleton (folder structure, with files included generated ones)  
-> cleanFiles: cleans the xhtml content (performs the cleaning of all xhtml files)  
-> pack: packages the epub file (zips the skeleton into an epub file)  
-> all: default behavior: creates the epub file then checks it's validity  
+> skeleton: crée un squelette d'ebook (structure des dossiers, avec les fichiers incluant ceux générés automatiquement)  
+> cleanFiles: nettoie le contenu des fichiers xhtml  
+> pack: réalise le pacquettage des fichiers de l'epub (zip le squelette dans un fichier epub)  
+> all: comportement par défaut : crée le fichier epub puis vérifie sa validité  
 
-Example: `ant skeleton -Dbase=in/example -Dtarget=2` to create only a folder with files for an epub2 format.  
+Exemple: `ant skeleton -Dbase=in/example -Dtarget=2` crée seulement un dossier avec les fichiers contenus dans un epub 2.  
 
 
-####other tasks
-Following are tasks that don't belong to default behavior of the script but revealed to be useful. `clean` and `onlyEpubCheck` are the only targets that don't require the parameter `-Dbase`.
+####autres tâches
+Ci-dessous se trouvent des tâches qui n'appartiennent pas au comportement par défaut du script mais s'avèrent utiles.
+`clean` et `onlyEpubCheck` sont les seuls ne nécessitant pas le paramètre `-Dbase`.
 
-> clean: cleans the 'out' directory (removes all generated files)  
-> unifyNames: renames correctly (no space or accented letter) input xhtml files within -Dbase '/OEBPS/text' folder  
-> makeIndex: list files in 'OEBPS/text' in alphabetic order to help create an index.csv file  
-> onlyEpubCheck: checks validity for an epub file indicated with -Depb.filename  
-> loop: loops over several overwrite alternative and recursively call the main task, -Doverwrite must be the path to a folder where each folder as a book structure
-(all output file names will be the ones of the overwriting folder)
+> clean: vide le répertoire 'out' (supprime tous les fichiers générés)  
+> unifyNames: renomme correctement (pas d'espace ou de lettre accentuée) les fichiers xhtml d'entrée dans le sous-répertoire '/OEBPS/text' de -Dbase  
+> makeIndex: fait la liste des fichiers dans 'OEBPS/text' par ordre alphabétique pour aider à la création du fichier index.csv  
+> onlyEpubCheck: vérifie la validité d'un fichier epub soumis par le paramètre -Depb.filename  
+> loop: boucle sur plusieurs alternative d'overwrite et appelle récursivement la tâche principale,
+-Doverwrite doit indiquer le chemin d'un répertoire ou chaque sous-répertoire respecte la structure d'un livre
+(tous les fichiers en sortie porteront le nom du sous-répertoire correspondant)
 
-Example: `ant loop -Dbase=in/example -Doverwrite=ext/folder-of-all-overwrite` to create several alternatives of the book from a folder of overwrite.
+Exemple: `ant loop -Dbase=in/example -Doverwrite=ext/folder-of-all-overwrite` va créer plusieurs alternatives du livre à partir d'un répertoire de plusieurs variantes.
