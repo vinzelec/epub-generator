@@ -1,6 +1,8 @@
 epub-generator
 ==============
 
+version courante : 0.1
+
 Script Ant pour générer des fichiers epub (epub2 et epub3) à partir de métadonnées et de fichiers bruts (xhtml, images, css)
 
 
