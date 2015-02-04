@@ -297,7 +297,7 @@
 	</target>
 
 	<target name="specificReplace" depends="specificCheck" if="replace.present">
-		<replace file="${filename}" replacefilterfile="${base}/metadata.properties" />
+		<replace file="${filename}" replacefilterfile="${base}/replace.properties" />
 	</target>
 
 	
