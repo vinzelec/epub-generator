@@ -117,7 +117,7 @@ et la valeur est la chaîne de remplacement.
 Exemple (ajout de classe pour les dialogues et les séparateurs) :
 
     <p>— : <p class\="dialogue">—    
-    <p class\="center">*</p> : <p class\="separator">*</p>
+    <p\u0020class\="center">*</p> : <p class\="separator">*</p>
     
     
     

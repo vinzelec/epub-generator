@@ -115,7 +115,7 @@ where the key is the matching pattern (according to [Ant replace task](https://a
 Example:
 
     <p>— : <p class\="dialogue">—    
-    <p class\="center">*</p> : <p class\="separator">*</p>
+    <p\u0020class\="center">*</p> : <p class\="separator">*</p>
     
     
     
