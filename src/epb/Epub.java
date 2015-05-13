@@ -63,7 +63,7 @@ public class Epub extends Task {
 
 	@Override
 	public void execute() throws BuildException {
-		log("creating manifest");
+		log("creating manifest in " + destDir.getAbsolutePath());
 		String manifest = generateManifest();
 		try {
 			IOUtils.replace(new File(destDir, "/OEBPS/content.opf"), "${manifest}", manifest);

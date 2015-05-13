@@ -72,7 +72,7 @@
           target: all              
          ================================= -->
 	<target name="all" depends="init, skeleton, cleanFiles, pack" description="default behavior: creates the epub file then checks it's validity">
-		<epubcheck file="${outfile}" />
+		<epubcheck file="${basedir}/${outfile}" />
 	</target>
 
 
@@ -288,7 +288,7 @@
 			</else>
 		</if>
 		<!-- TODO : rest of filling -->
-		<epub base="${base}" coverimage="${epb.coverFile}" dir="out/${epb.filename}" toctitle="Sommaire" target="${target}" lang="${epb.lang}" />
+		<epub base="${basedir}/${base}" coverimage="${epb.coverFile}" dir="${basedir}/out/${epb.filename}" toctitle="Sommaire" target="${target}" lang="${epb.lang}" />
 	</target>
 
 
