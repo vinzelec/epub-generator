@@ -185,7 +185,8 @@
 		<replaceregexp match="&lt;/([i|em|b|strong|s|strike|u])&gt;( )?&lt;\1&gt;" replace=" " file="${filename}" />
 		<!-- TODO : if such a tag is inside an other identical -->
 		<!-- entities and characters problems -->
-		<replace replacefilterfile="tools/entities.properties" file="${filename}" />
+		<!--<replace replacefilterfile="tools/entities.properties" file="${filename}" />-->
+		<!-- fuck of windows encoding... this breaks utf8 within xhtml files :'( -->
 		<replace replacefilterfile="tools/clean.properties" file="${filename}" />
 		<replace replacefilterfile="tools/entitiesclean.properties" file="${filename}" />
 		<!-- remove illegal html attributes -->
