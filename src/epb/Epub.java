@@ -20,7 +20,7 @@ public class Epub extends Task {
 
 	private String base, coverImage, tocTitle, lang;
 	private File baseDir, destDir;
-	private int target;
+	private int targetVersion;
 	
 	public void setBase(String base) {
 		this.base = base;
@@ -40,7 +40,7 @@ public class Epub extends Task {
 	}
 
 	public void setTarget(int target) {
-		this.target = target;
+		this.targetVersion = target;
 	}
 	
 	private String getId(String href) {
@@ -92,7 +92,7 @@ public class Epub extends Task {
 		buildSpineTocAndNavmap(csv, spineBuilder, tocBuilder, navmapBuilder, startIndex);
 		try {
 			IOUtils.replace(new File(destDir, "/OEBPS/content.opf"), "${spine}", spineBuilder.toString());
-			if(2 == target) IOUtils.replace(new File(destDir, "/OEBPS/toc.ncx"), "${navmap}", navmapBuilder.toString());
+			if(2 == targetVersion) IOUtils.replace(new File(destDir, "/OEBPS/toc.ncx"), "${navmap}", navmapBuilder.toString());
 			IOUtils.write(new File(destDir, "/OEBPS/toc.xhtml"), tocBuilder.toString());
 		} catch (IOException e) {
 			throw new BuildException(e);
@@ -124,7 +124,7 @@ public class Epub extends Task {
 						IOUtils.replace(file, "<body", "<body xml:lang=\""+lang+"\"");
 					}
 					// epub:type if epub 3
-					if(3 == target) {
+					if(3 == targetVersion) {
 						if(IOUtils.contains(file, "epub:type")) continue;
 						IOUtils.replace(file, "<html", "<html xmlns:epub=\"http://www.idpf.org/2007/ops\"");
 						IOUtils.replace(file, "<body", "<body epub:type=\""+type+"\"");
@@ -226,14 +226,14 @@ public class Epub extends Task {
 		} else {
 			if(tocTitle != null) tocBuilder.append("<h2>").append(tocTitle).append("</h2>\n");
 		}
-		if(3 == target) tocBuilder.append("<nav epub:type=\"toc\">\n");
+		if(3 == targetVersion) tocBuilder.append("<nav epub:type=\"toc\">\n");
 		tocBuilder.append("<ol>\n");
 	}
 
 	// create xhtml file footer
 	private void closeToc(StringBuilder tocBuilder) {
 		// tocBuilder.append("</ol>\n");
-		if (3 == target)
+		if (3 == targetVersion)
 			tocBuilder.append("</nav>\n");
 		// is there a post-toc.part file
 		File postToc = new File(baseDir, "post-toc.part");
@@ -286,7 +286,7 @@ public class Epub extends Task {
 						: getId(images[i]);
 				sb.append("<item id=\"").append(id).append("\" href=\"")
 						.append(href).append("\"");
-				if (coverImage.equals("OEBPS/" + href) && target == 3)
+				if (coverImage.equals("OEBPS/" + href) && targetVersion == 3)
 					sb.append(" properties=\"cover-image\"");
 				if(href.endsWith("jpg"))
 					sb.append(" media-type=\"image/jpeg\" />");
@@ -426,13 +426,13 @@ public class Epub extends Task {
 		}
 		for(Object key : content.keySet()) {
 			String role = ((String) key).trim();
-			String[] contribs = ((String) content.getProperty(role)).split(",");
+			String[] contribs = content.getProperty(role).split(",");
 			for (int i = 0; i < contribs.length; i++) {
 				sb.append("<dc:contributor  id=\"").append(role).append(i).append("\"");
-				if(target == 2) sb.append(" opf:role=\"").append(role).append("\"");
+				if(targetVersion == 2) sb.append(" opf:role=\"").append(role).append("\"");
 				sb.append(">");
 				sb.append(contribs[i].trim()).append("</dc:contributor>\n");
-				if(target == 3) {
+				if(targetVersion == 3) {
 					sb.append("<meta refines=\"#").append(role).append(i);
 					sb.append("\" property=\"role\" scheme=\"marc:relators\">");
 					sb.append(role).append("</meta>\n");

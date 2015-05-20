@@ -65,7 +65,7 @@ public class Check extends Task {
 			@Override
 			public void exception(String resource, Exception e) {
 				if(null != resource) throw new BuildException("exception while inspecting resource ["+resource+"]", e);
-				else throw new BuildException(e);
+				throw new BuildException(e);
 			}
 		};
 		EpubCheck check = new EpubCheck(new File(file), report);
