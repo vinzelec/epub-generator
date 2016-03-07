@@ -4,7 +4,7 @@
         <dc:identifier id="pub-id" opf:scheme="UUID">urn:uuid:epb.uid</dc:identifier>
         <dc:identifier id="isbn-id" opf:scheme="ISBN">urn:isbn:epb.isbn</dc:identifier>
         <dc:date opf:event="creation">${date}</dc:date>
-        <dc:date opf:event="publication">${date}</dc:date>
+        <dc:date opf:event="publication">${publicationDate}</dc:date>
         <dc:creator opf:role="aut">epb.author</dc:creator>
 		${contributors}
         <dc:language>epb.lang</dc:language>

@@ -67,6 +67,10 @@
 	<fileset dir="out/${epb.filename}/OEBPS/styles" id="stylesFiles">
 		<include name="*.css" />
 	</fileset>
+	
+	<condition property="publicationDateSet">
+		<isset property="epb.publicationDate" />
+	</condition>
 
 	<!-- ================================= 
           target: all              
@@ -176,6 +180,17 @@
 			<format property="hour" pattern="hh:mm:ss" />
 		</tstamp>
 		<echo>${date} ${hour} : building from ${epb.filename} to epub${target} with uid = ${epb.uid} and isbn = ${epb.isbn}</echo>
+		<if>
+			<isset property="epb.publicationDate" />
+			<then>
+				<property name="publicationDate" value="${epb.publicationDate}"/>
+				<echo>using user defined publication date : ${publicationDate}</echo>
+			</then>
+			<else>
+				<property name="publicationDate" value="${date}"/>
+				<echo>using default publication date : ${publicationDate}</echo>
+			</else>
+		</if>
 	</target>
 
 
@@ -265,6 +280,7 @@
 		<replace file="out/${epb.filename}/OEBPS/content.opf" token="epb.publisher" value="${epb.publisher}" />
 		<replace file="out/${epb.filename}/OEBPS/content.opf" token="epb.tags" value="${epb.tags}" />
 		<replace file="out/${epb.filename}/OEBPS/content.opf" token="epb.title" value="${epb.title}" />
+		<replace file="out/${epb.filename}/OEBPS/content.opf" token="$${publicationDate}" value="${publicationDate}" />
 		<if>
 			<equals arg1="${target}" arg2="2" />
 			<then>

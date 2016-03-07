@@ -14,6 +14,7 @@
         <dc:publisher>epb.publisher</dc:publisher>
         <dc:subject>epb.tags</dc:subject>
         <dc:title>epb.title</dc:title>
+        <dc:date>${publicationDate}</dc:date>
     </metadata>
     <manifest>
         <item id="toc" properties="nav" href="toc.xhtml" media-type="application/xhtml+xml" />
