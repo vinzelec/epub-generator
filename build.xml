@@ -197,21 +197,21 @@
 	<target name="cleanFile">
 		<echo>Cleaning ${filename}</echo>
 		<!-- useless tagging - only some inline (ie </i><i> or </b> <b>) - only when sure no classes or ids are used on this tags -->
-		<replaceregexp match="&lt;/([i|em|b|strong|s|strike|u])&gt;( )?&lt;\1&gt;" replace=" " file="${filename}" />
+		<replaceregexp match="&lt;/([i|em|b|strong|s|strike|u])&gt;( )?&lt;\1&gt;" replace=" " file="${filename}" encoding="UTF-8" />
 		<!-- TODO : if such a tag is inside an other identical -->
 		<!-- entities and characters problems -->
 		<!--<replace replacefilterfile="tools/entities.properties" file="${filename}" />-->
 		<!-- fuck of windows encoding... this breaks utf8 within xhtml files :'( -->
-		<replace replacefilterfile="tools/clean.properties" file="${filename}" />
-		<replace replacefilterfile="tools/entitiesclean.properties" file="${filename}" />
+		<replace replacefilterfile="tools/clean.properties" file="${filename}" encoding="UTF-8" />
+		<replace replacefilterfile="tools/entitiesclean.properties" file="${filename}" encoding="UTF-8" />
 		<!-- remove illegal html attributes -->
 		<if>
 			<equals arg1="${target}" arg2="3" />
 			<then>
-				<replaceregexp match=" width=&quot;[^&quot;]*&quot;" replace="" file="${filename}" />
-				<replaceregexp match=" height=&quot;[^&quot;]*&quot;" replace="" file="${filename}" />
-				<replaceregexp match="&lt;meta http\-equiv=&quot;Content\-Type&quot;[^&gt;]*&gt;" replace="" file="${filename}" />
-				<replaceregexp match="&lt;!DOCTYPE html PUBLIC[^&gt;]*&gt;" replace="" file="${filename}" />
+				<replaceregexp match=" width=&quot;[^&quot;]*&quot;" replace="" file="${filename}" encoding="UTF-8" />
+				<replaceregexp match=" height=&quot;[^&quot;]*&quot;" replace="" file="${filename}" encoding="UTF-8" />
+				<replaceregexp match="&lt;meta http\-equiv=&quot;Content\-Type&quot;[^&gt;]*&gt;" replace="" file="${filename}" encoding="UTF-8" />
+				<replaceregexp match="&lt;!DOCTYPE html PUBLIC[^&gt;]*&gt;" replace="" file="${filename}" encoding="UTF-8" />
 			</then>
 		</if>
 		<antcall target="specificReplace" />
