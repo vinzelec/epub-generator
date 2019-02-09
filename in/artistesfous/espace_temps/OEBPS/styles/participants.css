@@ -1,0 +1,33 @@
+.participant {
+	margin: 1.5em 0;
+}
+
+.identite {
+    page-break-after:avoid;
+}
+
+.nom {
+	font-weight: bold;
+}
+
+.age {}
+.location {}
+.website {}
+
+.participation {
+	font-weight: bold;
+}
+
+.categorie {
+	text-decoration: underline;
+}
+
+.biblio li {
+    list-style-type: none;
+	font-family:"Times New Roman", Times, serif;
+    font-size: 1.00em;
+	text-align: justify;
+	margin: 0.7em 0;
+    widows: 2;
+    orphans: 2;
+}

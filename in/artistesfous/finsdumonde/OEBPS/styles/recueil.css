@@ -1,0 +1,231 @@
+@namespace h "http://www.w3.org/1999/xhtml";
+p
+{
+    font-family:"Times New Roman", Times, serif;
+    margin:5pt 0pt;
+    text-indent: 2.00em;
+    text-align: justify;
+    font-size: 1.00em;
+    widows: 2;
+    orphans: 2;
+}
+#mainTitle
+{
+	font-family:"Times New Roman", Times, serif;
+    margin: 5em 0 2em 0;
+    text-align: center;
+    font-size: 2.00em;
+    page-break-after:avoid;
+}
+#subtitle
+{
+	font-family:"Times New Roman", Times, serif;
+    margin: 0 0 4em 0;
+    text-align: center;
+    font-size: 1.60em;
+    page-break-after:avoid;
+}
+#publisher
+{
+	font-family:"Times New Roman", Times, serif;
+    margin: 5em 0 0 0;
+    text-align: center;
+    font-size: 1.00em;
+    page-break-after:avoid;
+}
+#annee
+{
+	font-family:"Times New Roman", Times, serif;
+    margin: 2em 0 0 0;
+    text-align: center;
+    font-size: 0.80em;
+}
+.titrePrincipal
+{
+	font-family:"Times New Roman", Times, serif;
+	text-indent:0;
+	font-weight: bold;
+    text-align: center;
+    font-size: 1.30em;
+    page-break-after:avoid;
+    text-transform: uppercase;
+}
+.titreNouvelle
+{
+	font-family:"Times New Roman", Times, serif;
+	text-indent:0;
+    font-weight: bold;
+    font-style: italic;
+    text-align: center;
+    font-size: 1em;
+    page-break-after:avoid;
+    text-transform: uppercase;
+}
+.titrechapitre
+{
+	font-family:"Times New Roman", Times, serif;
+	margin: 30pt 0 15pt 0;
+	text-indent:0;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1em;
+    page-break-after:avoid;
+    clear: both;
+}
+.separateur
+{
+	text-indent:0;
+	font-weight: bold;
+    text-align: center;
+    font-size: 1.20em;
+    page-break-after:avoid;
+}
+.illustration
+{
+	margin: auto;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+}
+.portrait
+{
+	height: 100%;
+	width: auto;
+	max-width : 800px;
+	margin: auto;
+	text-align: center;
+}
+.paysage
+{
+	margin: auto;
+	width: 100%;
+	max-width : 800px;
+	text-align: center;
+}
+.titrebio
+{
+	font-family:"Times New Roman", Times, serif;
+	text-indent:0;
+	text-align: left;
+    page-break-after:avoid;
+}
+.bio 
+{
+	font-family:"Times New Roman", Times, serif;
+	text-indent: 1.00em;
+    font-size: 0.90em;
+}
+.citation
+{
+	font-family:"Times New Roman", Times, serif;
+	text-indent:0;
+	text-align: right;
+	font-size: 1em;
+	font-style: italic;
+}
+.citation i
+{
+	font-style: normal;
+}
+.citation em
+{
+	font-style: normal;
+}
+.collapse
+{
+	margin: 0pt;
+	padding: 0pt;
+}
+.dialogueTiret
+{
+	margin: 0pt;
+	padding-left: 1.5em;
+	text-indent: -1em;
+}
+.dialogueGuillemet
+{
+	margin: 0pt;
+	padding-left: 1.5em;
+	text-indent: -0.5em;
+}
+#fin
+{
+	font-family:"Times New Roman", Times, serif;
+	margin-top: 5em;
+	text-align: center;
+	text-indent:0;
+	font-weight: bold;
+    font-size: 3.00em;
+}
+.noxosAlternatif
+{
+	font-family:"Bookman Old Style", Old Style, serif;
+}
+.noxosAlternatifDialogueTiret
+{
+	font-family:"Bookman Old Style", Old Style, serif;
+	margin: 0pt;
+	padding-left: 1.5em;
+	text-indent: -1em;
+}
+.crisestenta p
+{
+	font-family:"Times New Roman", Times, serif;
+    margin: 0;
+    text-indent: 0;
+    text-align: center;
+    font-size: 1.00em;
+}
+.Cobaltleftimg {
+	width: 5%;
+	float : left;
+	margin: 0;
+	padding: 0;
+}
+.Cobaltleftimg img {
+	width: 100%;
+}
+.Cobaltrightimg {
+	width: 5%;
+	float : right;
+	margin: 0;
+	padding: 0;
+}
+.Cobaltrightimg img {
+	width: 100%;
+}
+.Cobaltalternate {
+	font-style: italic;
+	border: 1px solid;
+	padding: 1%;
+}
+.Cobaltalternate p {
+	text-align: center;
+	text-indent: 0;
+}
+.Cobaltalternate i {
+	font-style: normal;
+}
+.Cobaltalternate em {
+	font-style: normal;
+}
+.Cobaltchap1 {
+	margin-left: 11%;
+	margin-right: 11%;
+}
+.Cobaltchap2 {
+	margin-left: 16%;
+	margin-right: 16%;
+}
+.Cobaltchap3 {
+	margin-left: 21%;
+	margin-right: 21%;
+}
+.Cobaltchap4 {
+	margin-left: 26%;
+	margin-right: 26%;
+}
+.Cobaltchap5 {
+	margin-left: 5%;
+	margin-right: 5%;
+}

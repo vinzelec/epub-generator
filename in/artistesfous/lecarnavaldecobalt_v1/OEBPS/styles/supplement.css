@@ -1,0 +1,61 @@
+@namespace h "http://www.w3.org/1999/xhtml";
+
+.leftimg {
+	width: 10%;
+	float : left;
+	margin: 0;
+}
+
+.rightimg {
+	width: 10%;
+	float : right;
+	margin: 0;
+}
+
+.lastimg {
+	width: 90%;
+	margin: 5%;
+}
+
+h3 {
+	clear: both;
+}
+
+.alternate {
+	font-style: italic;
+	border: 1px solid;
+	padding: 1%;
+}
+
+.alternate p {
+	text-align: center;
+	text-indent: 0;
+}
+
+.alternate i {
+	font-style: normal;
+}
+.alternate em {
+	font-style: normal;
+}
+
+.chap1 {
+	margin-left: 11%;
+	margin-right: 11%;
+}
+.chap2 {
+	margin-left: 21%;
+	margin-right: 11%;
+}
+.chap3 {
+	margin-left: 21%;
+	margin-right: 21%;
+}
+.chap4 {
+	margin-left: 31%;
+	margin-right: 21%;
+}
+.chap5 {
+	margin-left: 5%;
+	margin-right: 5%;
+}

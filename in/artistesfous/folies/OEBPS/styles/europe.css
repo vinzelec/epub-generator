@@ -1,0 +1,39 @@
+.inter
+{
+	font-family:Arial, Helvetica, sans-serif;
+	margin: 5pt 0pt;
+	text-indent:0;
+    font-weight: bold;
+    font-style: italic;
+    text-align: center;
+    font-size: 1em;
+}
+
+.transmission
+{
+	text-indent: 0;
+}
+
+.europetitrechapitre1
+{
+	font-family:"Times New Roman", Times, serif;
+	margin: 20pt 0 0 0;
+	text-indent:0;
+    font-weight: bold;
+    text-align: left;
+    font-size: 1em;
+    page-break-after:avoid;
+    clear: both;
+}
+
+.europetitrechapitre2
+{
+	font-family:"Times New Roman", Times, serif;
+	margin: 0 0 15pt 0;
+	text-indent:0;
+    font-weight: bold;
+    text-align: left;
+    font-size: 1em;
+    page-break-after:avoid;
+    clear: both;
+}

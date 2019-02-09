@@ -1,0 +1,305 @@
+/* Fonts */
+@font-face {
+  font-family : EBGaramond;
+  font-weight : normal;
+  font-style: normal;
+  src : url(../fonts/EBGaramond08-Regular.otf);
+}
+
+@font-face {
+  font-family : BeberaHeavy;
+  font-weight : normal;
+  font-style: normal;
+  src : url(../fonts/A_bebedera-heavy.otf);
+}
+
+@font-face {
+  font-family : AlexBrush;
+  font-weight : normal;
+  font-style: normal;
+  src : url(../fonts/AlexBrush-Regular-OTF.otf);
+}
+
+@font-face {
+  font-family : ArcOldStandard;
+  font-weight : bold;
+  font-style: normal;
+  src : url(../fonts/arc-oldstandart-Bold.otf);
+}
+
+@font-face {
+  font-family : DowntownElegance;
+  font-weight : normal;
+  font-style: normal;
+  src : url(../fonts/Downtown_Elegance_Regular.otf);
+}
+
+@font-face {
+  font-family : DowntownElegance;
+  font-weight : normal;
+  font-style: italic;
+  src : url(../fonts/Downtown_Elegance_Italic.otf);
+}
+
+@font-face {
+  font-family : DowntownElegance;
+  font-weight : bold;
+  font-style: normal;
+  src : url(../fonts/Downtown_Elegance_Bold.otf);
+}
+
+@font-face {
+  font-family : DowntownElegance;
+  font-weight : bold;
+  font-style: italic;
+  src : url(../fonts/Downtown_Elegance_Bold_Italic.otf);
+}
+
+@font-face {
+  font-family : GaroaHackerClub;
+  font-weight : bold;
+  font-style: normal;
+  src : url(../fonts/GaroaHackerClubeBold.otf);
+}
+
+@font-face {
+  font-family : GrandHotel;
+  font-weight : normal;
+  font-style: normal;
+  src : url(../fonts/GrandHotel-Regular.otf);
+}
+
+@font-face {
+  font-family : GNUTypewriter;
+  font-weight : normal;
+  font-style: normal;
+  src : url(../fonts/gtw.otf);
+}
+
+@font-face {
+  font-family : PressStart2P;
+  font-weight : normal;
+  font-style: normal;
+  src : url(../fonts/PressStart2P.otf);
+}
+
+/* Classes */
+.PoogleDefault
+{
+	font-family: Arial, sans-serif;
+	font-size: 0.9em;
+}
+
+.PoogleArithmetiques
+{
+	font-family: "EBGaramond", serif;
+	color: #808080;
+}
+
+.PoogleSpam
+{
+	text-decoration: line-through;
+}
+
+.PooglePub
+{
+	font-family: "DowntownElegance", sans-serif;
+	font-size: 1em;
+	font-weight: bold;
+	color : #696969;
+}
+
+.PoogleGarde
+{
+	font-family: Arial, sans-serif;
+	font-weight: bold;
+	font-size: 0.9em;
+	background-color: #c0c0c0;
+}
+
+.PoogleDoc
+{
+	font-family: "PressStart2P", sans-serif;
+	font-size: 0.6em;
+	font-weight: bold;
+}
+
+.PoogleCensure
+{
+	font-family: Arial, sans-serif;
+	font-size: 0.9em;
+	background-color: black;
+	color: white;
+}
+
+.PoogleMemories
+{
+	font-family: "EBGaramond", serif;
+	font-size: 1.1em;
+	font-style: italic;
+	text-decoration: underline;
+	color: #444;
+}
+
+.PoogleMode
+{
+	font-style: italic;
+	color: #696969;
+	background-color: #d3d3d3;
+}
+
+.PooglePedia
+{
+	font-family: "GrandHotel", cursive;
+	font-size: 1.1em;
+	font-style: italic;
+}
+
+.PoogleEmotions
+{
+	font-family: "EBGaramond", serif;
+	font-size: 1.1em;
+	color: #c0c0c0;
+	background-color: #808080;
+}
+
+.PoogleMeteo
+{
+	font-weight: bold;
+	color: #999;
+}
+
+.PoogleMap
+{
+	font-family: "EBGaramond", serif;
+	font-weight: bold;
+	color: #999;
+}
+
+.PoogleConversation
+{
+	font-style: italic;
+	color: #696969;
+}
+
+.PoogleClearView
+{
+	font-family: "BeberaHeavy", fantasy;
+	font-style: italic;
+}
+
+.PoogleClock
+{
+	font-family: "EBGaramond", serif;
+	font-size: 1.1em;
+}
+
+.PooglePay
+{
+	font-family: Arial, sans-serif;
+	font-size: 0.9em;
+}
+
+.PoogleAgenda
+{
+	font-family: "EBGaramond", serif;
+	font-size: 0.9em;
+	color: #696969;
+	background-color: #d3d3d3;
+}
+
+.PoogleFlash
+{
+	font-family: "GNUTypewriter", monospace;
+	font-size: 0.8em;
+	font-weight: bold;
+}
+
+.PoogleRadio
+{
+	font-family: "EBGaramond", serif;
+	font-weight: bold;
+	color: #808080;
+}
+
+.PoogleCognition
+{
+	font-family: "ArcOldStandard", fantasy;
+	font-weight: bold;
+	font-size: 1.1em;
+}
+
+.PooglePolice
+{
+	color: #d3d3d3;
+	background-color: #444;
+}
+
+.PoogleTaxi
+{
+	font-family: "EBGaramond", serif;
+	font-style: italic;
+	font-weight: bold;
+	color: #696969;
+}
+
+.PoogleSearch
+{
+	font-family: "GrandHotel", cursive;
+	font-size: 1.1em;
+}
+
+.PoogleAstro
+{
+	font-family: Times, serif;
+	font-style: italic;
+	color: #696969;
+}
+
+.PoogleAlerte
+{
+	font-family: Arial, sans-serif;
+	color: white;
+	background-color: black;
+}
+
+.PoogleSport
+{
+	font-family: "GaroaHackerClub", monospace;
+	font-size: 0.8em;
+}
+
+.WTFHMD
+{
+	color: white;
+	background-color: white;
+}
+
+.standalone
+{
+	page-break-before: always;
+	margin: 4em 0 4em 0;
+	text-align: center;
+}
+
+.ELephant
+{
+	font-style: italic;
+	font-weight: bold;
+	color : #a9a9a9;
+}
+
+.PoogleDream
+{
+	font-family: "AlexBrush", cursive;
+	color: #696969;
+	font-weight: bold;
+	font-size: 1.2em;
+}
+
+.PooglePsy
+{
+	font-family: "EBGaramond", serif;
+	color: #696969;
+	background-color: #d3d3d3;
+}

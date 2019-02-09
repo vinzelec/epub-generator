@@ -1,0 +1,17 @@
+
+@font-face {
+  font-family : EBGaramond;
+  font-weight : normal;
+  font-style: normal;
+  src : url(../fonts/EBGaramond08-Regular.otf);
+}
+
+.incipit
+{
+	font-family: "EBGaramond", serif;
+	text-align: center;
+	text-indent: 0;
+	margin-left: 2em;
+	margin-right: 2em;
+	font-style: italic;
+}
