@@ -13,14 +13,20 @@
     </description>
 
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
-		<classpath path="lib/ant-contrib-0.6.jar" />
+		<classpath>
+			<fileset dir="target/lib">
+				<include name="*.jar" />
+			</fileset>
+		</classpath>
 	</taskdef>
-	<taskdef name="epub" classname="epb.Epub" classpath="bin" />
+	<taskdef name="epub" classname="epb.Epub">
+		<classpath path="target/classes" />
+	</taskdef>
 	<taskdef name="epubcheck" classname="epb.Check">
 		<classpath>
-			<pathelement path="bin" />
-			<fileset dir="lib">
-				<include name="**/*.jar" />
+			<pathelement path="target/classes" />
+			<fileset dir="target/lib">
+				<include name="*.jar" />
 			</fileset>
 		</classpath>
 	</taskdef>
