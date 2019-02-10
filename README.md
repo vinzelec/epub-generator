@@ -1,7 +1,7 @@
 epub-generator
 ==============
 
-current version: 0.1
+current version: 1.0.0
 
 Ant script to generate an epub (epub2 and epub3) from metadata files and raw content (xhtml, images, css)
 
@@ -11,12 +11,13 @@ Preamble
 ###Requirement
 To use this script you need to install on your computer
 
-* Java runtime environment (1.6 or more)
+* Java runtime environment (1.8 or more)
   * can be downloaded at [Oracle website](http://www.oracle.com/technetwork/java/index.html)
 * Ant script environment (1.9 or more)
   * can be downloaded at [Ant page](http://ant.apache.org/)
+* Maven build environment
   
-Then in the epub-generator directory you must first run the command `ant -f compile.xml`
+Then in the epub-generator directory you must first run the command `mvn clean install`
 
 ###Important note on ZIP
 Because of how the zip task is implemented within ant (and java) and because of OPF standard,
@@ -41,14 +42,15 @@ HOW-TO use the script
 ---------------------
 ###The Directory structure
 Here is the classic structure to work with (no directory is mandatory ; each can also contains .txt files if you want to add the licence of a file used) :
-
+```
     my-book
        +- OEBPS
             +- fonts (put all fonts used in .otf format)
             +- images (put all images used in .jpg or .png formats)
             +- styles (put all styles used in .css format)
             +- text (put all texts used in .xhtml format)
-    
+```  
+
 ###The table of content
 Within the my-book folder, the file `index.csv` will be used to automatically generate the table of content :
 
@@ -67,7 +69,7 @@ This file will be used to generate the table of content and order the pages of t
 Each line represent an entry for a file.  
 Each line has the following format : `(playOrder;)file;depth;type*;(title)`
 
-* playOrder is optional (if not present, the file is supposed sorted).
+* playOrder is optional (if not present, the file is supposed sorted). TODO: check if this works
 * The file is relative to the my-book directory.
 * The depth start at index 0 (first-level) and use to create hierarchy (chapter, sub-chapter...).
 * The type is keyword from [Epub vocabulary](http://idpf.org/epub/vocab/structure/) that will be included into file for epub 3 format (it is assume xhtml don't already embed epub3 metadata)
@@ -78,9 +80,9 @@ From the example:
     OEBPS/text/00_-_1_cover.xhtml;0;cover; Couverture  
     OEBPS/text/00_-_2_title.xhtml;0;titlepage; Page de titre  
     OEBPS/text/00_-_3_avantpropos.xhtml;0;preface; Avant-Propos  
-    OEBPS/text/00_-_4_pubLAFA.xhtml;0;; Pub éhontée pour l'éditeur d'origine  
-    OEBPS/text/01_-_Je_meurs_comme_j_ai_vecu.xhtml;0;titlepage; Je meurs comme j’ai vécu  
-    OEBPS/text/02_-_credits.xhtml;0;backmatter; Crédits  
+    OEBPS/text/00_-_4_pubLAFA.xhtml;0;; Pub Ã©hontÃ©e pour l'Ã©diteur d'origine  
+    OEBPS/text/01_-_Je_meurs_comme_j_ai_vecu.xhtml;0;titlepage; Je meurs comme j'ai vÃ©cu  
+    OEBPS/text/02_-_credits.xhtml;0;backmatter; CrÃ©dits  
 
 ###The metadata files
 Within the my-book folder, 2 properties files will be used to generate the metadata of the generated epub.  
@@ -113,10 +115,10 @@ During the ebook creation, a task of cleaning is performed on every XHTML file (
 In addition to automatic cleaning process, a special mechanism to perform specific replacement is implemented. It is used by adding an optional `replace.properties` file
 where the key is the matching pattern (according to [Ant replace task](https://ant.apache.org/manual/Tasks/replace.html)) and the value the replacement.  
 Example:
-
-    <p>— : <p class\="dialogue">—    
+```
+    <p>â€” : <p class\="dialogue">â€”    
     <p\u0020class\="center">*</p> : <p class\="separator">*</p>
-    
+```
     
     
 Run the script
@@ -130,7 +132,7 @@ For example : `ant -Dbase=in/my-book`
 Then there is several optional parameter :
 
 * `-Dtarget` indicates which version of epub is to be generated. The authorized values are `2` and `3` (default value is `3`)  
-* `-DuseSystemZip` indicates to use the system `zip` command instead of ant task. The authorized values are `true` and `false` (default value is `false` but due to a bug – issue #2 – this has to be set to true)  
+* `-DuseSystemZip` indicates to use the system `zip` command instead of ant task. The authorized values are `true` and `false` (default value is `false` but due to a bug "issue #2" this has to be set to true)  
 * `-Doutfile` allows to select an output filename that is different to the one defined in `metadata.properties`. For example `-Doutfile=another.epub` (the name must contain the .epub extension)  
 * `-Doverwrite` allows to indicate the path to a folder to use to overwrite some files from default base folder. It allows to create an alternative version of the book without having to modify the source.
 
