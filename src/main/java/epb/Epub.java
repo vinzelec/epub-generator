@@ -1,14 +1,13 @@
 package epb;
 
+import static epb.FileUtils.*;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Properties;
 
@@ -148,9 +147,13 @@ public class Epub extends Task {
 			String href = line[csvStartIndex].trim();
 			int depth = Integer.parseInt(line[csvStartIndex+1]);
 			// type not used here
-			String title = line[csvStartIndex+3].trim();
+			StringBuilder titleBuilder = new StringBuilder();
+			titleBuilder.append(line[csvStartIndex+3].trim());
 			// if more than 5 rebuild the last string
-			for(int i = csvStartIndex+4 ; i < line.length ; i++) title += ";"+line[i];
+			for(int i = csvStartIndex+4 ; i < line.length ; i++){
+				titleBuilder.append(";").append(line[i]);
+			}
+			String title = titleBuilder.toString();
 			// the spine
 			String id = getId(href);
 			spineBuilder.append("<itemref idref=\"").append(id).append("\" />\n");
@@ -256,16 +259,11 @@ public class Epub extends Task {
 		File styleDir = new File(baseDir, "/OEBPS/styles");
 		File fontsDir = new File(baseDir, "/OEBPS/fonts");
 		if (textDir.exists()) {
-			String[] texts = textDir.list(new FilenameFilter() {
-				@Override
-				public boolean accept(File dir, String name) {
-					return name.endsWith(".xhtml");
-				}
-			});
-			for (int i = 0; i < texts.length; i++) {
-				log("creating manifest item for " + texts[i]);
-				String href = "text/" + texts[i];
-				String id = getId(texts[i]);
+			String[] texts = nullSafeFilter.apply(textDir, filterXHTMLfiles);
+			for (String text : texts) {
+				log("creating manifest item for " + text);
+				String href = "text/" + text;
+				String id = getId(text);
 				sb.append("<item id=\"").append(id).append("\" href=\"")
 						.append(href);
 				sb.append("\" media-type=\"application/xhtml+xml\" />").append(
@@ -273,17 +271,12 @@ public class Epub extends Task {
 			}
 		}
 		if(imgDir.exists()) {
-			String[] images = imgDir.list(new FilenameFilter() {
-				@Override
-				public boolean accept(File dir, String name) {
-					return name.endsWith(".jpg") || name.endsWith(".png");
-				}
-			});
-			for (int i = 0; i < images.length; i++) {
-				log("creating manifest item for " + images[i]);
-				String href = "images/" + images[i];
+			String[] images = nullSafeFilter.apply(imgDir, filterImagefiles);
+			for (String image : images) {
+				log("creating manifest item for " + image);
+				String href = "images/" + image;
 				String id = coverImage.equals("OEBPS/" + href) ? "cover"
-						: getId(images[i]);
+						: getId(image);
 				sb.append("<item id=\"").append(id).append("\" href=\"")
 						.append(href).append("\"");
 				if (coverImage.equals("OEBPS/" + href) && targetVersion == 3)
@@ -295,79 +288,49 @@ public class Epub extends Task {
 				sb.append("\n");
 			}
 			// if license or readme included
-			String[] texts = imgDir.list(new FilenameFilter() {
-				@Override
-				public boolean accept(File dir, String name) {
-					return name.endsWith(".txt");
-				}
-			});
-			for (int i = 0; i < texts.length; i++) {
-				log("creating manifest item for " + texts[i]);
-				String href = "images/" + texts[i];
-				String id = texts[i];
-				sb.append("<item id=\"").append(id).append("\" href=\"")
+			String[] texts = nullSafeFilter.apply(imgDir, filterTxtfiles);
+			for (String text : texts) {
+				log("creating manifest item for " + text);
+				String href = "images/" + text;
+				sb.append("<item id=\"").append(text).append("\" href=\"")
 						.append(href);
 				sb.append("\" media-type=\"text/plain\" />").append("\n");
 			}
 		}
 		if (styleDir.exists()) {
-			String[] styles = styleDir.list(new FilenameFilter() {
-				@Override
-				public boolean accept(File dir, String name) {
-					return name.endsWith(".css");
-				}
-			});
-			for (int i = 0; i < styles.length; i++) {
-				log("creating manifest item for " + styles[i]);
-				String href = "styles/" + styles[i];
-				String id = styles[i];
-				sb.append("<item id=\"").append(id).append("\" href=\"")
+			String[] styles = nullSafeFilter.apply(styleDir, filterCssfiles);
+			for (String style : styles) {
+				log("creating manifest item for " + style);
+				String href = "styles/" + style;
+				sb.append("<item id=\"").append(style).append("\" href=\"")
 						.append(href);
 				sb.append("\" media-type=\"text/css\" />").append("\n");
 			}
 			// if license or readme included
-			String[] texts = styleDir.list(new FilenameFilter() {
-				@Override
-				public boolean accept(File dir, String name) {
-					return name.endsWith(".txt");
-				}
-			});
-			for (int i = 0; i < texts.length; i++) {
-				log("creating manifest item for " + texts[i]);
-				String href = "styles/" + texts[i];
-				String id = texts[i];
-				sb.append("<item id=\"").append(id).append("\" href=\"")
+			String[] texts = nullSafeFilter.apply(styleDir, filterTxtfiles);
+			for (String text : texts) {
+				log("creating manifest item for " + text);
+				String href = "styles/" + text;
+				sb.append("<item id=\"").append(text).append("\" href=\"")
 						.append(href);
 				sb.append("\" media-type=\"text/plain\" />").append("\n");
 			}
 		}
 		if (fontsDir.exists()) {
-			String[] fonts = fontsDir.list(new FilenameFilter() {
-				@Override
-				public boolean accept(File dir, String name) {
-					return name.endsWith(".otf");
-				}
-			});
-			for (int i = 0; i < fonts.length; i++) {
-				log("creating manifest item for " + fonts[i]);
-				String href = "fonts/" + fonts[i];
-				String id = fonts[i];
-				sb.append("<item id=\"").append(id).append("\" href=\"")
+			String[] fonts = nullSafeFilter.apply(fontsDir, filterFontfiles);
+			for (String font : fonts) {
+				log("creating manifest item for " + font);
+				String href = "fonts/" + font;
+				sb.append("<item id=\"").append(font).append("\" href=\"")
 						.append(href);
 				sb.append("\" media-type=\"font/opentype\" />").append("\n");
 			}
 			// if license or readme included
-			String[] texts = fontsDir.list(new FilenameFilter() {
-				@Override
-				public boolean accept(File dir, String name) {
-					return name.endsWith(".txt");
-				}
-			});
-			for (int i = 0; i < texts.length; i++) {
-				log("creating manifest item for " + texts[i]);
-				String href = "fonts/" + texts[i];
-				String id = texts[i];
-				sb.append("<item id=\"").append(id).append("\" href=\"")
+			String[] texts = nullSafeFilter.apply(fontsDir, filterTxtfiles);
+			for (String text : texts) {
+				log("creating manifest item for " + text);
+				String href = "fonts/" + text;
+				sb.append("<item id=\"").append(text).append("\" href=\"")
 						.append(href);
 				sb.append("\" media-type=\"text/plain\" />").append("\n");
 			}
@@ -376,23 +339,20 @@ public class Epub extends Task {
 	}
 	
 	private static void sortCSVData(List<String[]> data) {
-		Collections.sort(data, new Comparator<String[]>() {
-			@Override
-			public int compare(String[] o1, String[] o2) {
+		data.sort((o1, o2) -> {
 				assert o1.length > 1 && o2.length > 1 : "CSV data invalid";
 				Integer playorder1 = Integer.parseInt(o1[0]), playorder2  = Integer.parseInt(o2[0]);
 				return playorder1.compareTo(playorder2);
-			}
-		});
+			});
 	}
 	
 	// read the CSV file without using third part library
 	private List<String[]> readCSV() throws BuildException {
 		BufferedReader in = null;
 		try {
-			List<String[]> list = new ArrayList<String[]>();
+			List<String[]> list = new ArrayList<>();
 			in = new BufferedReader(new FileReader(new File(new File(base), "index.csv")));
-		    String line = "";
+		    String line;
 		    while((line = in.readLine()) != null) {
 		    	if(line.trim().length() == 0) {
 		    		continue; // ignoring empty line
