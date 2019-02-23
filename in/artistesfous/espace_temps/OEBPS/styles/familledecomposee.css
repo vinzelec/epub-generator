@@ -1,0 +1,36 @@
+.soustitre {
+	font-family:"Times New Roman", Times, serif;
+    text-indent:0;
+    font-weight: bold;
+    font-style: italic;
+    text-align: center;
+    font-size: 1em;
+    page-break-after:avoid;
+}
+
+#personnages ul {
+	list-style-type: none;
+}
+
+#personnages li {
+	text-indent: -1.5em;
+}
+
+.titreChapitreFD {
+	text-decoration: underline;
+}
+
+.didascalie {
+	font-style: italic;
+	margin-top: 1em;
+    text-indent: 3em;
+}
+
+.perso {
+	text-align: center;
+	font-style: italic;
+	margin-top: 2em;
+}
+
+.dialogue {
+}
