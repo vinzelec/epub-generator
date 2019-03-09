@@ -1,7 +1,6 @@
  .invocation p {
-    direction:rtl;
-    text-align: right;
-    padding-right: 8em;
-    padding-left: 2em;
+    text-align: justify;
+    padding-right: 4em;
+    padding-left: 6em;
     text-indent: -2.00em;
 }

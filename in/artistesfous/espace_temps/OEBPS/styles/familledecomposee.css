@@ -23,13 +23,14 @@
 .didascalie {
 	font-style: italic;
 	margin-top: 1em;
-    text-indent: 3em;
 }
 
 .perso {
 	text-align: center;
+	text-indent: 0;
 	font-style: italic;
 	margin-top: 2em;
+    page-break-after:avoid;
 }
 
 .dialogue {

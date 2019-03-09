@@ -1,0 +1,4 @@
+.headline {
+	margin: 2em 0 1em 0;
+	page-break-after: avoid;
+}

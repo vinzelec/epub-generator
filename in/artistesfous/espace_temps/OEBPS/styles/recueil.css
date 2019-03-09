@@ -155,13 +155,13 @@ p
 .dialogueTiret
 {
 	margin: 0pt;
-	padding-left: 1.5em;
+	padding-left: 1.2em;
 	text-indent: -1em;
 }
 .dialogueGuillemet
 {
 	margin: 0pt;
-	padding-left: 1.5em;
+	padding-left: 1.2em;
 	text-indent: -0.5em;
 }
 #fin
@@ -189,4 +189,8 @@ p
 
 .siecle {
 	font-variant: small-caps;
+}
+
+.exposant {
+	vertical-align:super;
 }

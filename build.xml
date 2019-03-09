@@ -277,37 +277,37 @@
 		<echo>Filling the metadata</echo>
 		<!-- FIXME : here, fuck, find a way to use properties so the file can be ignored to use default values 
 		<replace file="out/${epb.filename}/OEBPS/content.opf" replacefilterfile="${base}/metadata.properties" />-->
-		<replace file="out/${epb.filename}/OEBPS/content.opf" token="epb.author" value="${epb.author}" />
-		<replace file="out/${epb.filename}/OEBPS/content.opf" token="epb.coverFile" value="${epb.coverFile}" />
-		<replace file="out/${epb.filename}/OEBPS/content.opf" token="epb.filename" value="${epb.filename}" />
-		<replace file="out/${epb.filename}/OEBPS/content.opf" token="epb.isbn" value="${epb.isbn}" />
-		<replace file="out/${epb.filename}/OEBPS/content.opf" token="epb.uid" value="${epb.uid}" />
-		<replace file="out/${epb.filename}/OEBPS/content.opf" token="epb.lang" value="${epb.lang}" />
-		<replace file="out/${epb.filename}/OEBPS/content.opf" token="epb.publisher" value="${epb.publisher}" />
-		<replace file="out/${epb.filename}/OEBPS/content.opf" token="epb.tags" value="${epb.tags}" />
-		<replace file="out/${epb.filename}/OEBPS/content.opf" token="epb.title" value="${epb.title}" />
-		<replace file="out/${epb.filename}/OEBPS/content.opf" token="$${publicationDate}" value="${publicationDate}" />
+		<replace file="out/${epb.filename}/OEBPS/content.opf" encoding="UTF-8" token="epb.author" value="${epb.author}" />
+		<replace file="out/${epb.filename}/OEBPS/content.opf" encoding="UTF-8" token="epb.coverFile" value="${epb.coverFile}" />
+		<replace file="out/${epb.filename}/OEBPS/content.opf" encoding="UTF-8" token="epb.filename" value="${epb.filename}" />
+		<replace file="out/${epb.filename}/OEBPS/content.opf" encoding="UTF-8" token="epb.isbn" value="${epb.isbn}" />
+		<replace file="out/${epb.filename}/OEBPS/content.opf" encoding="UTF-8" token="epb.uid" value="${epb.uid}" />
+		<replace file="out/${epb.filename}/OEBPS/content.opf" encoding="UTF-8" token="epb.lang" value="${epb.lang}" />
+		<replace file="out/${epb.filename}/OEBPS/content.opf" encoding="UTF-8" token="epb.publisher" value="${epb.publisher}" />
+		<replace file="out/${epb.filename}/OEBPS/content.opf" encoding="UTF-8" token="epb.tags" value="${epb.tags}" />
+		<replace file="out/${epb.filename}/OEBPS/content.opf" encoding="UTF-8" token="epb.title" value="${epb.title}" />
+		<replace file="out/${epb.filename}/OEBPS/content.opf" encoding="UTF-8" token="$${publicationDate}" value="${publicationDate}" />
 		<if>
 			<equals arg1="${target}" arg2="2" />
 			<then>
 				<!-- FIXME : here, fuck, find a way to use properties so the file can be ignored to use default values 
 						<replace file="out/${epb.filename}/OEBPS/toc.ncx" replacefilterfile="${base}/metadata.properties" /> -->
 
-				<replace file="out/${epb.filename}/OEBPS/toc.ncx" token="epb.author" value="${epb.author}" />
-				<replace file="out/${epb.filename}/OEBPS/toc.ncx" token="epb.coverFile" value="${epb.coverFile}" />
-				<replace file="out/${epb.filename}/OEBPS/toc.ncx" token="epb.filename" value="${epb.filename}" />
-				<replace file="out/${epb.filename}/OEBPS/toc.ncx" token="epb.isbn" value="${epb.isbn}" />
-				<replace file="out/${epb.filename}/OEBPS/toc.ncx" token="epb.uid" value="${epb.uid}" />
-				<replace file="out/${epb.filename}/OEBPS/toc.ncx" token="epb.lang" value="${epb.lang}" />
-				<replace file="out/${epb.filename}/OEBPS/toc.ncx" token="epb.publisher" value="${epb.publisher}" />
-				<replace file="out/${epb.filename}/OEBPS/toc.ncx" token="epb.tags" value="${epb.tags}" />
-				<replace file="out/${epb.filename}/OEBPS/toc.ncx" token="epb.title" value="${epb.title}" />
+				<replace file="out/${epb.filename}/OEBPS/toc.ncx" encoding="UTF-8"  token="epb.author" value="${epb.author}" />
+				<replace file="out/${epb.filename}/OEBPS/toc.ncx" encoding="UTF-8"  token="epb.coverFile" value="${epb.coverFile}" />
+				<replace file="out/${epb.filename}/OEBPS/toc.ncx" encoding="UTF-8"  token="epb.filename" value="${epb.filename}" />
+				<replace file="out/${epb.filename}/OEBPS/toc.ncx" encoding="UTF-8"  token="epb.isbn" value="${epb.isbn}" />
+				<replace file="out/${epb.filename}/OEBPS/toc.ncx" encoding="UTF-8"  token="epb.uid" value="${epb.uid}" />
+				<replace file="out/${epb.filename}/OEBPS/toc.ncx" encoding="UTF-8"  token="epb.lang" value="${epb.lang}" />
+				<replace file="out/${epb.filename}/OEBPS/toc.ncx" encoding="UTF-8"  token="epb.publisher" value="${epb.publisher}" />
+				<replace file="out/${epb.filename}/OEBPS/toc.ncx" encoding="UTF-8"  token="epb.tags" value="${epb.tags}" />
+				<replace file="out/${epb.filename}/OEBPS/toc.ncx" encoding="UTF-8"  token="epb.title" value="${epb.title}" />
 
-				<replace file="out/${epb.filename}/OEBPS/toc.ncx" token="$${date}" value="${date}" />
-				<replace file="out/${epb.filename}/OEBPS/content.opf" token="$${date}" value="${date}" />
+				<replace file="out/${epb.filename}/OEBPS/toc.ncx" encoding="UTF-8"  token="$${date}" value="${date}" />
+				<replace file="out/${epb.filename}/OEBPS/content.opf" encoding="UTF-8"  token="$${date}" value="${date}" />
 			</then>
 			<else>
-				<replace file="out/${epb.filename}/OEBPS/content.opf" token="$${date}" value="${date}T${hour}Z" />
+				<replace file="out/${epb.filename}/OEBPS/content.opf" encoding="UTF-8"  token="$${date}" value="${date}T${hour}Z" />
 			</else>
 		</if>
 		<!-- TODO : rest of filling -->
