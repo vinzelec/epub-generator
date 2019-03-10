@@ -1,5 +1,6 @@
-package epb;
+package epb.tasks;
 
+import epb.utils.IOUtils;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 
@@ -13,8 +14,8 @@ import java.util.Properties;
  */
 public class ReplaceTask extends Task {
 
-    String file;
-    String properties;
+    private String file;
+    private String properties;
 
     public void setFile(String file) {
         this.file = file;
@@ -25,7 +26,7 @@ public class ReplaceTask extends Task {
     }
 
     @Override
-    public void execute() throws BuildException {
+    public void execute() {
         log("replacing patterns in "+file+" using "+properties);
         File fileRef = new File(file);
         Properties propertiesRef = new Properties();
@@ -47,7 +48,7 @@ public class ReplaceTask extends Task {
 
         String value;
 
-        public MutableString(String content) {
+        MutableString(String content) {
             this.value = content;
         }
 

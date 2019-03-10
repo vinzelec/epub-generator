@@ -19,10 +19,10 @@
 			</fileset>
 		</classpath>
 	</taskdef>
-	<taskdef name="epub" classname="epb.Epub">
+	<taskdef name="epub" classname="epb.tasks.BuildEpubTask">
 		<classpath path="target/classes" />
 	</taskdef>
-	<taskdef name="epubcheck" classname="epb.Check">
+	<taskdef name="epubcheck" classname="epb.tasks.CheckEpubTask">
 		<classpath>
 			<pathelement path="target/classes" />
 			<fileset dir="target/lib">
@@ -30,7 +30,7 @@
 			</fileset>
 		</classpath>
 	</taskdef>
-	<taskdef name="replaceAll" classname="epb.ReplaceTask">
+	<taskdef name="replaceAll" classname="epb.tasks.ReplaceTask">
 		<classpath>
 			<pathelement path="target/classes" />
 			<fileset dir="target/lib">
