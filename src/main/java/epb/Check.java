@@ -17,7 +17,7 @@ import com.adobe.epubcheck.util.FeatureEnum;
  */
 public class Check extends Task {
 
-	String file;
+	private String file;
 	
 	public void setFile(String file) {
 		this.file = file;

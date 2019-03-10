@@ -9,7 +9,7 @@ import java.util.function.Function;
 /**
  * functions to filter files in a directory.
  */
-class FileUtils {
+abstract class FileUtils {
 
     static BiFunction<File, FilenameFilter, String[]> nullSafeFilter = (file, filter) ->
             Optional.of(file).map(f -> f.list(filter)).orElse(new String[]{});
