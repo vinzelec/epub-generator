@@ -7,6 +7,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Utils functions to handle CSV format (partial, not handling cells on several lines, only handling semi-colon as separator...)
+ *
+ * @author Vinze
+ */
 public interface CsvUtils {
 
     /**

@@ -13,6 +13,8 @@ import java.util.logging.Logger;
 
 /**
  * functions to filter files in a directory.
+ * 
+ * @author Vinze
  */
 public abstract class FileUtils {
 
@@ -38,8 +40,8 @@ public abstract class FileUtils {
      * Reads a list of properties files and return as one merged properties.<br />
      * Any file that cannot be read is ignored
      *
-     * @param files
-     * @return
+     * @param files list of property files to load
+     * @return the properties loaded
      */
     public static Properties readFileProperties(File... files) {
         Properties properties = new Properties();
