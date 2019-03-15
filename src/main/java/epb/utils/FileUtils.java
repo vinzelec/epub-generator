@@ -1,7 +1,5 @@
 package epb.utils;
 
-import sun.reflect.misc.FieldUtil;
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.FilenameFilter;
@@ -18,7 +16,7 @@ import java.util.logging.Logger;
  */
 public abstract class FileUtils {
 
-    private static final Logger LOGGER = Logger.getLogger(FieldUtil.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(FileUtils.class.getName());
 
     private FileUtils() {
     }
