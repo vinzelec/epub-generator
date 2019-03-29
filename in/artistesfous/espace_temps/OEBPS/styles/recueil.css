@@ -155,13 +155,13 @@ p
 .dialogueTiret
 {
 	margin: 0pt;
-	padding-left: 1.2em;
+	padding-left: 1em;
 	text-indent: -1em;
 }
 .dialogueGuillemet
 {
 	margin: 0pt;
-	padding-left: 1.2em;
+	padding-left: 1em;
 	text-indent: -0.5em;
 }
 #fin
