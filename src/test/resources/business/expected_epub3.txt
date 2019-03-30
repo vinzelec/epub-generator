@@ -1,0 +1,12 @@
+<dc:contributor  id="pbl0">Vincent Leclercq</dc:contributor>
+<meta refines="#pbl0" property="role" scheme="marc:relators">pbl</meta>
+<dc:contributor  id="crr1">Herr Mad Doktor</dc:contributor>
+<meta refines="#crr1" property="role" scheme="marc:relators">crr</meta>
+<dc:contributor  id="crr2">Ludovic Klein</dc:contributor>
+<meta refines="#crr2" property="role" scheme="marc:relators">crr</meta>
+<dc:contributor  id="crr3">Southeast Jones</dc:contributor>
+<meta refines="#crr3" property="role" scheme="marc:relators">crr</meta>
+<dc:contributor  id="aut4">Vincent Leclercq</dc:contributor>
+<meta refines="#aut4" property="role" scheme="marc:relators">aut</meta>
+<dc:contributor  id="edt5">Les Éditions des Artistes Fous</dc:contributor>
+<meta refines="#edt5" property="role" scheme="marc:relators">edt</meta>

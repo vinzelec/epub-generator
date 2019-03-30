@@ -19,10 +19,18 @@
 			</fileset>
 		</classpath>
 	</taskdef>
-	<taskdef name="epub" classname="epb.Epub">
+	<taskdef name="epub" classname="epb.tasks.BuildEpubTask">
 		<classpath path="target/classes" />
 	</taskdef>
-	<taskdef name="epubcheck" classname="epb.Check">
+	<taskdef name="epubcheck" classname="epb.tasks.CheckEpubTask">
+		<classpath>
+			<pathelement path="target/classes" />
+			<fileset dir="target/lib">
+				<include name="*.jar" />
+			</fileset>
+		</classpath>
+	</taskdef>
+	<taskdef name="replaceAll" classname="epb.tasks.ReplaceTask">
 		<classpath>
 			<pathelement path="target/classes" />
 			<fileset dir="target/lib">
@@ -43,6 +51,7 @@
 	<property name="target" value="3" />
 	<property name="useSystemZip" value="false" />
 	<!-- default values that can be overwritten in metadata.properties -->
+	<!-- FIXME don't work anymore -->
 	<generateguid property="epb.uid" />
 	<property name="epb.isbn" value="000-0-00000-000-0" />
 	<property name="epb.author" value="Unknown Author" />
@@ -275,35 +284,18 @@
 
 	<target name="fillSkeleton" depends="init, createDir">
 		<echo>Filling the metadata</echo>
-		<!-- FIXME : here, fuck, find a way to use properties so the file can be ignored to use default values 
-		<replace file="out/${epb.filename}/OEBPS/content.opf" replacefilterfile="${base}/metadata.properties" />-->
-		<replace file="out/${epb.filename}/OEBPS/content.opf" token="epb.author" value="${epb.author}" />
-		<replace file="out/${epb.filename}/OEBPS/content.opf" token="epb.coverFile" value="${epb.coverFile}" />
-		<replace file="out/${epb.filename}/OEBPS/content.opf" token="epb.filename" value="${epb.filename}" />
-		<replace file="out/${epb.filename}/OEBPS/content.opf" token="epb.isbn" value="${epb.isbn}" />
-		<replace file="out/${epb.filename}/OEBPS/content.opf" token="epb.uid" value="${epb.uid}" />
-		<replace file="out/${epb.filename}/OEBPS/content.opf" token="epb.lang" value="${epb.lang}" />
-		<replace file="out/${epb.filename}/OEBPS/content.opf" token="epb.publisher" value="${epb.publisher}" />
-		<replace file="out/${epb.filename}/OEBPS/content.opf" token="epb.tags" value="${epb.tags}" />
-		<replace file="out/${epb.filename}/OEBPS/content.opf" token="epb.title" value="${epb.title}" />
+
+		<!-- FIXME no more default values :( -->
+		<replaceAll file="out/${epb.filename}/OEBPS/content.opf" properties="${base}/metadata.properties" />
 		<replace file="out/${epb.filename}/OEBPS/content.opf" token="$${publicationDate}" value="${publicationDate}" />
+		<replace file="out/${epb.filename}/OEBPS/content.opf" token="epb.uid" value="${epb.uid}" />
+
 		<if>
 			<equals arg1="${target}" arg2="2" />
 			<then>
-				<!-- FIXME : here, fuck, find a way to use properties so the file can be ignored to use default values 
-						<replace file="out/${epb.filename}/OEBPS/toc.ncx" replacefilterfile="${base}/metadata.properties" /> -->
-
-				<replace file="out/${epb.filename}/OEBPS/toc.ncx" token="epb.author" value="${epb.author}" />
-				<replace file="out/${epb.filename}/OEBPS/toc.ncx" token="epb.coverFile" value="${epb.coverFile}" />
-				<replace file="out/${epb.filename}/OEBPS/toc.ncx" token="epb.filename" value="${epb.filename}" />
-				<replace file="out/${epb.filename}/OEBPS/toc.ncx" token="epb.isbn" value="${epb.isbn}" />
+				<replaceAll file="out/${epb.filename}/OEBPS/toc.ncx" properties="${base}/metadata.properties" />
 				<replace file="out/${epb.filename}/OEBPS/toc.ncx" token="epb.uid" value="${epb.uid}" />
-				<replace file="out/${epb.filename}/OEBPS/toc.ncx" token="epb.lang" value="${epb.lang}" />
-				<replace file="out/${epb.filename}/OEBPS/toc.ncx" token="epb.publisher" value="${epb.publisher}" />
-				<replace file="out/${epb.filename}/OEBPS/toc.ncx" token="epb.tags" value="${epb.tags}" />
-				<replace file="out/${epb.filename}/OEBPS/toc.ncx" token="epb.title" value="${epb.title}" />
 
-				<replace file="out/${epb.filename}/OEBPS/toc.ncx" token="$${date}" value="${date}" />
 				<replace file="out/${epb.filename}/OEBPS/content.opf" token="$${date}" value="${date}" />
 			</then>
 			<else>

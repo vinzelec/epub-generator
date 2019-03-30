@@ -1,0 +1,6 @@
+<dc:contributor  id="pbl0" opf:role="pbl">Vincent Leclercq</dc:contributor>
+<dc:contributor  id="crr1" opf:role="crr">Herr Mad Doktor</dc:contributor>
+<dc:contributor  id="crr2" opf:role="crr">Ludovic Klein</dc:contributor>
+<dc:contributor  id="crr3" opf:role="crr">Southeast Jones</dc:contributor>
+<dc:contributor  id="aut4" opf:role="aut">Vincent Leclercq</dc:contributor>
+<dc:contributor  id="edt5" opf:role="edt">Les Éditions des Artistes Fous</dc:contributor>
