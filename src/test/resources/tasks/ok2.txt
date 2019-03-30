@@ -1,0 +1,2 @@
+Test file with some value1 to be replace like value2.
+Test file with some value1 to be replace like value2.

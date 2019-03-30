@@ -1,4 +1,4 @@
-package epb;
+package epb.tasks;
 
 import java.io.File;
 
@@ -15,18 +15,19 @@ import com.adobe.epubcheck.util.FeatureEnum;
  * @author Vinze
  *
  */
-public class Check extends Task {
+public class CheckEpubTask extends Task {
 
-	String file;
+	private String file;
 	
 	public void setFile(String file) {
 		this.file = file;
 	}
 
 	@Override
-	public void execute() throws BuildException {
+	public void execute() {
 		Report report = new Report() {
-			int warningCount = 0, errorCount = 0;
+			int warningCount = 0;
+			int errorCount = 0;
 			@Override
 			public int getWarningCount() {
 				return warningCount;
@@ -42,25 +43,20 @@ public class Check extends Task {
 			@Override
 			public void info(String resource, FeatureEnum feature, String message) {
 				// too verbose...
-//				if(null != resource) log("INFO on [" + resource + "] " +" [FEATURE="+feature+"] :"+ message);
-//				else  log("INFO [FEATURE="+feature+"] : " + message);
 			}
 			@Override
 			public void hint(String resource, int line, int column, String message) {
-				if(null != resource) log("HINT on [" + resource + "] at line " + line + ", column " + column + " : " + message);
-				else  log("HINT : " + message);
+				log("HINT", resource, line, column, message);
 			}
 			@Override
 			public void warning(String resource, int line, int column, String message) {
 				warningCount++;
-				if(null != resource) log("WARNING on [" + resource + "] at line " + line + ", column " + column + " : " + message);
-				else  log("WARNING : " + message);
+				log("WARNING", resource, line, column, message);
 			}
 			@Override
 			public void error(String resource, int line, int column, String message) {
 				errorCount++;
-				if(null != resource) log("ERROR on [" + resource + "] at line " + line + ", column " + column + " : " + message);
-				else  log("ERROR : " + message);
+				log("ERROR", resource, line, column, message);
 			}
 			@Override
 			public void exception(String resource, Exception e) {
@@ -73,5 +69,14 @@ public class Check extends Task {
 		if(0 < report.getErrorCount()) throw new BuildException(report.getErrorCount()+" error(s) and "+ report.getWarningCount() +" warning(s) reported by epubcheck");
 		log(file+" is valid with " + report.getWarningCount() + " warning(s)");
 	}
-	
+
+	private void log(String level, String resource, int line, int column, String message) {
+		if (null != resource){
+			log(level + " on [" + resource + "] at line " + line + ", column " + column + " : " + message);
+		}
+		else {
+			log(level + " : " + message);
+		}
+	}
+
 }
