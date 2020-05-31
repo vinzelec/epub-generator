@@ -1,16 +1,19 @@
 package epb.tasks;
 
-import epb.utils.IOUtils;
-import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.Task;
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
+import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.Task;
+
+import epb.utils.IOUtils;
+
 /**
  * Replace all tokens in a file from the value of a property file.
+ * 
+ * @deprecated
  */
 public class ReplaceTask extends Task {
 

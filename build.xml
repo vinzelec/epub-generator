@@ -30,6 +30,7 @@
 			</fileset>
 		</classpath>
 	</taskdef>
+	<!--
 	<taskdef name="replaceAll" classname="epb.tasks.ReplaceTask">
 		<classpath>
 			<pathelement path="target/classes" />
@@ -38,6 +39,7 @@
 			</fileset>
 		</classpath>
 	</taskdef>
+	-->
 	<scriptdef name="generateguid" language="javascript">
 		<attribute name="property" />
 		<![CDATA[
@@ -286,14 +288,14 @@
 		<echo>Filling the metadata</echo>
 
 		<!-- FIXME no more default values :( -->
-		<replaceAll file="out/${epb.filename}/OEBPS/content.opf" properties="${base}/metadata.properties" />
+		<replace file="out/${epb.filename}/OEBPS/content.opf" replacefilterfile="${base}/metadata.properties" />
 		<replace file="out/${epb.filename}/OEBPS/content.opf" token="$${publicationDate}" value="${publicationDate}" />
 		<replace file="out/${epb.filename}/OEBPS/content.opf" token="epb.uid" value="${epb.uid}" />
 
 		<if>
 			<equals arg1="${target}" arg2="2" />
 			<then>
-				<replaceAll file="out/${epb.filename}/OEBPS/toc.ncx" properties="${base}/metadata.properties" />
+				<replace file="out/${epb.filename}/OEBPS/toc.ncx" replacefilterfile="${base}/metadata.properties" />
 				<replace file="out/${epb.filename}/OEBPS/toc.ncx" token="epb.uid" value="${epb.uid}" />
 
 				<replace file="out/${epb.filename}/OEBPS/content.opf" token="$${date}" value="${date}" />
