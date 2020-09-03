@@ -34,6 +34,14 @@ p
     font-size: 1.00em;
     page-break-after:avoid;
 }
+#collection
+{
+	font-family:"Times New Roman", Times, serif;
+    margin: 5em 0 0 0;
+    text-align: center;
+    font-size: 1.00em;
+    page-break-after:avoid;
+}
 #annee
 {
 	font-family:"Times New Roman", Times, serif;
@@ -59,6 +67,16 @@ p
     page-break-after:avoid;
     text-transform: uppercase;
 }
+.auteur 
+{
+	font-family:"Times New Roman", Times, serif;
+	text-indent:0;
+    font-weight: bold;
+    font-style: italic;
+    text-align: center;
+    font-size: 1em;
+    page-break-after:avoid;
+}
 .titreNouvelle
 {
 	font-family:"Times New Roman", Times, serif;
@@ -69,11 +87,12 @@ p
     font-size: 1em;
     page-break-after:avoid;
     font-variant: small-caps;
+    margin-bottom: 2em;
 }
 .titreChapitre
 {
 	font-family:"Times New Roman", Times, serif;
-	margin: 20pt 0 15pt 0;
+	margin: 2em 0 1.5em 0;
 	text-indent:0;
     font-weight: bold;
     text-align: center;
@@ -88,6 +107,7 @@ p
     text-align: center;
     font-size: 1.20em;
     page-break-after:avoid;
+    margin: 2em 0;
 }
 .illustration
 {
@@ -130,6 +150,14 @@ p
 	font-family:"Times New Roman", Times, serif;
 	text-indent: 1.00em;
     font-size: 0.90em;
+}
+.signature
+{
+	font-family:"Times New Roman", Times, serif;
+	text-indent:0;
+	text-align: right;
+	font-size: 1em;
+	font-style: italic;
 }
 .citation
 {
