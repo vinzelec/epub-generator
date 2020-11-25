@@ -20,7 +20,17 @@
         <url>scm:git:https://github.com/vinzelec/epub-generator.git</url>
         <developerConnection>scm:git:https://github.com/vinzelec/epub-generator.git</developerConnection>
     </scm>
-
+	<repositories>
+	    <repository>
+	      <snapshots>
+	        <enabled>false</enabled>
+	      </snapshots>
+	      <id>central</id>
+	      <name>Central Repository</name>
+	      <url>https://repo.maven.apache.org/maven2</url>
+	    </repository>
+	  </repositories>
+  
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.apache.ant/ant -->
         <dependency>
