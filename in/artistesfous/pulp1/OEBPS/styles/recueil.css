@@ -3,7 +3,7 @@
 p
 {
     font-family:"Times New Roman", Times, serif;
-    margin:5pt 0pt;
+    margin:0.4em 0;
     text-indent: 2.00em;
     text-align: justify;
     font-size: 1.00em;
@@ -13,7 +13,7 @@ p
 #mainTitle
 {
 	font-family:"Times New Roman", Times, serif;
-    margin: 4em 0 2em 0;
+    margin: 3em 0 1em 0;
     text-align: center;
     font-size: 2.00em;
     page-break-after:avoid;
@@ -21,7 +21,7 @@ p
 #subtitle
 {
 	font-family:"Times New Roman", Times, serif;
-    margin: 0 0 3.50em 0;
+    margin: 0 0 2em 0;
     text-align: center;
     font-size: 1.60em;
     page-break-after:avoid;
@@ -29,7 +29,7 @@ p
 #publisher
 {
 	font-family:"Times New Roman", Times, serif;
-    margin: 5em 0 0 0;
+    margin: 2em 0 0 0;
     text-align: center;
     font-size: 1.00em;
     page-break-after:avoid;
@@ -37,7 +37,7 @@ p
 #collection
 {
 	font-family:"Times New Roman", Times, serif;
-    margin: 5em 0 0 0;
+    margin: 2em 0 0 0;
     text-align: center;
     font-size: 1.00em;
     page-break-after:avoid;
@@ -45,14 +45,14 @@ p
 #annee
 {
 	font-family:"Times New Roman", Times, serif;
-    margin: 2em 0 0 0;
+    margin: 1em 0 0 0;
 	text-indent:0;
     text-align: center;
     font-size: 0.80em;
 }
 #logo
 {
-	margin: 2em 0 0 0;
+	margin: 1em 0 0 0;
 	text-indent:0;
 	width: 100%;
     text-align: center;
@@ -74,7 +74,7 @@ p
     font-weight: bold;
     font-style: italic;
     text-align: center;
-    font-size: 1em;
+    font-size: 1.2em;
     page-break-after:avoid;
 }
 .titreNouvelle
@@ -84,7 +84,7 @@ p
     font-weight: bold;
     font-style: italic;
     text-align: center;
-    font-size: 1em;
+    font-size: 1.2em;
     page-break-after:avoid;
     font-variant: small-caps;
     margin-bottom: 2em;
@@ -159,9 +159,25 @@ p
 	font-size: 1em;
 	font-style: italic;
 }
-.citation
+.note 
 {
 	font-family:"Times New Roman", Times, serif;
+	text-indent: 1.00em;
+    font-size: 0.90em;
+}
+p.citation
+{
+	font-family:"Times New Roman", Times, serif;
+    margin:0;
+	text-indent:0;
+	text-align: right;
+	font-size: 1em;
+	font-style: italic;
+}
+.citation p
+{
+	font-family:"Times New Roman", Times, serif;
+    margin:0;
 	text-indent:0;
 	text-align: right;
 	font-size: 1em;
