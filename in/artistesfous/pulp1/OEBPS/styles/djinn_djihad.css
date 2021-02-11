@@ -1,0 +1,22 @@
+@font-face {
+  font-variant: "Linux Libertine R";
+  font-family : Libertine;
+  font-weight : normal;
+  font-style: normal;
+  src : url(../fonts/LinLibertine_R.otf);
+}
+@font-face {
+  font-variant: "(A) Arslan Wessam A (A) Arslan Wessam A";
+  font-family : "(A) Arslan Wessam A";
+  font-weight : normal;
+  font-style: normal;
+  src : url(../fonts/A-Arslan-Wessam-A-A-Arslan-Wessam-A.otf);
+}
+
+.arabic {
+	font: "(A) Arslan Wessam A";
+}
+
+.hebrew {
+	font: Libertine;
+}
